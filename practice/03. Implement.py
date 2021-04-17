@@ -62,6 +62,7 @@ def Chess(data):
 
 if __name__ == "__main__":
 
+    # print("ade")
     # print(Up_Down_Left_Right(5))
     # print(time_cnt(5))
     # print(Chess('a1'))
