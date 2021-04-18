@@ -124,7 +124,7 @@ def quick_sort_append(array):
 
     return quick_sort_append(left_side) + [pivot] + quick_sort_append(right_side)
 
-
+# 계수정렬
 def count_sort(array):
     # 모든 범위를 포함하는 리스트 선언(+1) -> 0으로 초기화
     cnt = [0] * (max(array) + 1)
