@@ -75,7 +75,7 @@ def to_One(n):
 # 식량의 최댓값을 구하는 문제이며, 최소한 한 칸 이상 떨어진 곳에 침투해야함
 def ant_Warrior(n):
 
-    d = [10001] * (n+1)
+    d = [0] * (n+1)
 
     # array = map(int, input().split())
     array = [1, 3, 1, 5]
