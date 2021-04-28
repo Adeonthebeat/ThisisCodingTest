@@ -27,17 +27,18 @@ def Runner_Up():
     return arrList[-2]
 
 def Nested_Lists(N):
-# Harry
-# 37.21
-# Berry
-# 37.21
-# Tina
-# 37.2
-# Akriti
-# 41
-# Harsh
-# 39
-
+    '''
+Harry
+37.21
+Berry
+37.21
+Tina
+37.2
+Akriti
+41
+Harsh
+39
+    '''
     scored_list = []
 
     # find name, the second lowest grade.
