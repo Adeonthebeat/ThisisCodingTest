@@ -1,3 +1,4 @@
+import heapq
 import sys
 import string
 import numpy
@@ -22,6 +23,55 @@ import textwrap
 5 3 1
 5 6 2
 '''
+
+def Dijkstras_HEAP():
+
+    input = sys.stdin.readline
+    INF = int(1e9)
+
+    n, m = map(int, input().split())
+    start = int(input())
+    graph = [[] for i in range(n+1)]
+    distance = [INF] * (n+1)
+
+    for i in range(m):
+        a, b, c = map(int, input().split())
+        graph[a].append((b, c))
+
+    def dijkstras_HEAP(start):
+        q = []
+        heapq.heappush(q, (0, start))
+        distance[start] = 0
+
+        while q:
+            # 가장 최단거리가 짧은 노드 정보 꺼내기
+            dist, now = heapq.heappop(q)
+
+            # 이미 처리된 적이 있는 노드라면, 무시
+            if distance[now] < dist:
+                continue
+
+            # 현재 노드와 연결된 인접한 노드 확인
+            for i in graph[now]:
+
+                # cost 계산
+                # i[0] = b의 노드 | i[1] = c의 비용
+                cost = dist + i[1]
+
+                # 현재 노드를 거쳐서 다른 노드로 이동하는 거리가 더 짧은 경우, HEAP에서 PUSH
+                if cost < distance[i[0]]:
+                    distance[i[0]] = cost
+                    heapq.heappush(q, (cost, i[0]))
+
+    dijkstras_HEAP(start)
+
+    for i in range(1, n+1):
+        if distance[i] == 'INF':
+            print("INFINITY")
+        else:
+            print(distance[i])
+
+
 def Dijkstras():
     input = sys.stdin.readline
     INF = int(1e9)
@@ -84,5 +134,6 @@ def Nested_Lists(N):
 
 
 if __name__ == "__main__":
-    Dijkstras()
-    # print(Nested_Lists(5))
+    # Dijkstras()
+    Dijkstras_HEAP()
+
