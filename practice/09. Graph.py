@@ -73,15 +73,11 @@
 # 위상정렬은 DAG(direct_acyclic_graph): 순환하지 않는 방향그래프의 특징
 # 정답이 1가지 이상인 경우도 있다. 위상정렬을 구현할때 stack을 이용한 DFS로도 구현할 수 있다.
 
-'''
-6 4
-1 4
-2 3
-2 4
-5 6
-'''
+
 
 # 특정 원소가 속한 집합을 찾기
+import copy
+import sys
 from collections import deque
 
 '''
@@ -98,9 +94,8 @@ def find_parent(parent, x):
 def find_parent(parent, x):
     if parent[x] != x:
         # 루트 노드가 아니라면, 루트 노드를 찾을 때까지 재귀적으로 호출
-        return find_parent(parent, parent[x])
-    else:
-        return parent[x]
+        parent[x] = find_parent(parent, parent[x])
+    return parent[x]
 
 # 두 원소가 속한 집합을 합치기
 def union_parent(parent, a, b):
@@ -111,6 +106,13 @@ def union_parent(parent, a, b):
     else:
         parent[a] = b
 
+'''
+6 4
+1 4
+2 3
+2 4
+5 6
+'''
 # 서로소 집합
 def disjoint_sets():
     # 노드 개수, 간선(Union 연산)의 개수 세팅
@@ -275,10 +277,121 @@ def topology():
             print(i, end=' ')
     topology_sort()
 
+def find_parent_team(parent, x):
+    if parent[x] != x:
+        # 루트 노드가 아니라면, 루트 노드를 찾을 때까지 재귀적으로 호출
+        parent[x] = find_parent_team(parent, parent[x])
+    return parent[x]
 
+def union_parent_team(parent, a, b):
+    a = find_parent_team(parent, a)
+    b = find_parent_team(parent, b)
+    if a < b:
+        parent[b] = a
+    else:
+        parent[a] = b
+'''
+7 8
+0 1 3
+1 1 7
+0 7 6
+1 7 1
+0 3 7
+0 4 2
+0 1 1
+1 1 1
+'''
+# 팀 만들기 문제
+def make_team():
+
+    n, m = map(int, input().split())
+    parent = [0] * (n+1) # 부모 테이블 초기화
+
+    # 부모테이블상에서 부모를 자기 자신으로 초기화
+    for i in range(0, n+1):
+        parent[i] = i
+
+    for i in range(m):
+        # 팀 합치기 0 a b
+        # 팀 여부   1 a b
+        oper, a, b = map(int, input().split())
+
+        # 합집합 연산인 경우
+        if oper == 0:
+            union_parent_team(parent, a, b)
+
+        elif oper == 1:
+            if find_parent_team(parent, a) == find_parent_team(parent, b):
+                print('YES')
+            else:
+                print('NO')
+'''
+5
+10 -1
+10 1 -1
+4 1 -1
+4 3 1 -1
+3 3 -1
+'''
+
+# 커리큘럼 문제
+def curriculum():
+    input = sys.stdin.readline
+
+    # 노드 개수
+    v = int(input())
+    
+    # 모든 노드에 대한 진입차수를 0으로 초기화
+    indegree = [0] * (v+1)
+
+    # 각 노드에 연결된 간선정보를 담기위한 연결리스트 초기화
+    graph = [[] for i in range(v+1)]
+
+    # 각 강의시간을 0으로 초기화
+    time = [0] * (v+1)
+
+    # 방향 그래프의 모든 간선정보 입력받기
+    for i in range(1, v+1):
+        data = list(map(int, input().split()))
+        time[i] = data[0]  # 시간정보
+        for x in data[1:-1]:
+            indegree[i] += 1
+            graph[x].append(i)
+        
+    # 위상정렬함수
+    def topology_sort():
+        # 알고리즘 수행결과를 담을 리스트
+        result = copy.deepcopy(time)
+        q = deque()
+        
+        # 처음 시작할 때 진입차수가 0인 노드를 큐에 삽입
+        for i in range(1, v+1):
+            if indegree[i] == 0:
+                q.append(i)
+        
+        # 큐가 빌때까지
+        while q:
+            # 큐에서 원소꺼내기
+            now = q.popleft()
+            
+            for i in graph[now]:
+                result[i] = max(result[i], result[now] + time[i])
+                indegree[i] -= 1
+                
+                # 새롭게 진입 차수가 0이되는 노드를 큐에 삽입
+                if indegree[i] == 0:
+                    q.append(i)
+
+        for i in range(1, v+1):
+            print(result[i])
+
+    topology_sort()
+            
 
 if __name__ == "__main__":
     # disjoint_sets()
     # disjoint_sets_cycle()
     # Kruskal_Algorithm()
-    topology()
+    # topology()
+    # make_team()
+    curriculum()
