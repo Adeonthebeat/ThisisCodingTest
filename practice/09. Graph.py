@@ -361,6 +361,7 @@ def curriculum():
     # 위상정렬함수
     def topology_sort():
         # 알고리즘 수행결과를 담을 리스트
+        # ti
         result = copy.deepcopy(time)
         q = deque()
         
@@ -386,7 +387,88 @@ def curriculum():
             print(result[i])
 
     topology_sort()
-            
+
+
+
+
+# 특정 원소가 속한 집합 찾기
+def find_parent_city(parent, x):
+    if parent[x] != x:
+        parent[x] = find_parent_city(parent, parent[x])
+    return parent[x]
+
+# 두 원소가 속한 집합 합치기
+def union_parent_city(parent,a, b):
+
+    a = find_parent_city(parent, a)
+    b = find_parent_city(parent, b)
+
+    if a < b:
+        parent[b] = a
+    else:
+        parent[a] = b
+
+
+# 도시분할계획
+# 마을을 2개로 분리하기전에 최소 신장트리(크루스칼)를 이용하면 최소값이 나온다.
+# 트리 자료구조는 노드가 N개일 때 항상 간선의 개수는 N-1이다.
+# 문제에서 길을 없애고 나머지 길의 유지비의 합을 최소로 하고 싶다고 적혀있는데
+# 이는 가장 유지비가 많이 드는 길을 끊으면 다음 유지비가 최소가 된다는말과 동일하다.
+# Developer`s Kick : 전체 그래프에서 2개의 최소 신장 트리를 만들어야 함
+# 크루스칼 알고리즘으로 최소 신장 트리를 찾은 다음 최소 신장 트리를 구성하는 간선 중 가장 비용이 큰 간선을 제거하는 것
+
+'''
+7 12
+1 2 3
+1 3 2
+3 2 1
+2 5 2
+3 4 4
+7 3 6
+5 1 5
+1 6 2
+6 4 1
+6 5 3
+4 5 3
+6 7 4
+'''
+def city_divide():
+
+    # 노드, 간선 개수 입력받기
+    v, e = map(int, input().split())
+    
+    # 부모테이블 초기화
+    parent = [0] * (v + 1)
+
+    # 모든 간선을 담을 리스트와, 최종 비용을 담을 변수
+    edges = []
+    result = 0  # 유지비가 최소로 드는 길 Count
+
+    # 부모 테이블에서 부모 자기 자신 초기화
+    for i in range(1, v+1):
+        parent[i] = i
+
+    # 모든 간선에 대한 정보 받기
+    for _ in range(e):
+        a, b, cost = map(int, input().split())
+        # 비용 순으로 정렬하기 위해 튜플의 첫 번째 원소를 비용으로 설정
+        edges.append((cost, a, b))
+
+    # 간선을 비용 순으로 정렬
+    edges.sort()
+    # 최소 신장 트리에 포함된 간선 중 가장 비용이 큰 간선
+    last = 0
+
+    # 간선을 하나씩 확인하며
+    for edge in edges:
+        cost, a, b = edge
+        # 사이클이 발생하지 않는 경우에만 집합에 포함
+        if find_parent_city(parent, a) != find_parent_city(parent, b):
+            union_parent_city(parent, a, b)
+            result += cost
+            last = cost
+
+    print(result - last)
 
 if __name__ == "__main__":
     # disjoint_sets()
@@ -394,4 +476,5 @@ if __name__ == "__main__":
     # Kruskal_Algorithm()
     # topology()
     # make_team()
-    curriculum()
+    # curriculum()
+    city_divide()
