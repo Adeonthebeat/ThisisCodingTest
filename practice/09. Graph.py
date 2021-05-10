@@ -75,11 +75,12 @@
 
 
 
-# 특정 원소가 속한 집합을 찾기
+
 import copy
 import sys
 from collections import deque
 
+# 특정 원소가 속한 집합을 찾기
 '''
 def find_parent(parent, x):
     # 루트노드가 아니라면, 루트 노드를 찾을 때까지 재귀적 호출
@@ -88,6 +89,7 @@ def find_parent(parent, x):
     else:
         return x
 '''
+
 # 경로 압축기법 코드(특정 원소가 속한 집합을 찾기)
 # 기존 시간복잡도는 O(V) 
 # 개선된 알고리즘을 사용하면 시간복잡도는 O(V+M(1+logV))정도로 줄어듬
