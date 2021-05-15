@@ -191,7 +191,7 @@ def Choose_BowlingBall():
     for x in data:
         # 각 무게에 해당하는 볼링공의 개수 카운트
         arr[x] += 1
-    print('arr',arr)
+
     ret = 0
     # 1부터 m까지의 각 무게에 대하여 처리
     for i in range(1, m):
@@ -244,8 +244,6 @@ def solution(food_times, k):
     # 전체 음식을 먹는 시간보다 k가 크거나 같다면, -1
     if sum(food_times) <= k:
         return -1
-
-
 
     # 시간이 적게 드는 음식부터 먹어야 하므로, 우선순위 큐 사용
     q = []

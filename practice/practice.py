@@ -132,8 +132,52 @@ def Nested_Lists(N):
     second_name = sorted(set(name for name, score in scored_list if second_score == score))
     return second_name
 
+def Choose_BowlingBall():
+    n, m = map(int, input().split())
+
+    data = list(map(int, input().split()))
+
+    data.sort()
+
+    arr = [0] * 11
+
+    for i in data:
+        arr[i] += 1
+
+    ret = 0
+
+    for i in arr:
+        n -= arr[i]
+        ret += arr[i] * n
+    print(ret)
+
+def solution(food_times, k):
+
+    if sum(food_times) <= k:
+        return -1
+
+    sum_value = 0
+    previous = 0
+    length = len(food_times)
+
+    q = []
+    for i in range(len(food_times)):
+        # (음식종류, 시간)
+        heapq.heappush(q, (food_times[i], i+1))
+
+    while sum_value + (q[0][0] - previous) * length <= k:
+        # 음식
+        now = heapq.heappop(q)[0]
+        sum_value += (now - previous) * length
+
+        length -= 1
+        previous = now
+
+    ret = sorted(q, key=lambda x: x[1])
+    return ret[(k - sum_value) % length][1]
+
 
 if __name__ == "__main__":
     # Dijkstras()
-    Dijkstras_HEAP()
-
+    # Dijkstras_HEAP()
+    Choose_BowlingBall()
