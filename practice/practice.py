@@ -240,6 +240,59 @@ def text_compreesed(s):
 
     return answer
 
+def rotate(key):
+    n = len(key)    # 행
+    m = len(key[0]) # 열
+
+    rotate_key = [[0] * n for _ in range(m)]
+
+    for i in range(n):
+        for j in range(m):
+            rotate_key[j][n - i - 1] = key[i][j]
+    return rotate_key
+
+def check(new_lock):
+    lock_length = len(new_lock) // 3
+    for i in range(lock_length, lock_length * 2):
+        for j in range(lock_length, lock_length * 2):
+            if new_lock[i][j] != 1:
+                return False
+    return True
+
+def lock_key(key, lock):
+    n = len(lock)
+    m = len(key)
+
+    # 새로운 자물쇠의 중앙부분에 기존의 자물쇠 넣기
+    new_lock = [[0] * (n * 3) for _ in range(n * 3)]
+
+    for i in range(n):
+        for j in range(n):
+            new_lock[i + n][j + n] = lock[i][j]
+
+    # 4가지 방향에 대해서 확인
+    for rotation in range(4):
+
+        # 열쇠 회전
+        rotated_key = rotate(key)
+
+        # 자물쇠
+        for x in range(n * 2):
+            for y in range(n * 2):
+
+                # 자물쇠에 열쇠 끼어넣기(key)
+                for i in range(m):
+                    for j in range(m):
+                        new_lock[x + i][y + j] += rotated_key[i][j]
+
+                if check(new_lock):
+                    return True
+
+                for i in range(m):
+                    for j in range(m):
+                        new_lock[x + i][y + j] -= rotated_key[i][j]
+    return False
+
 
 if __name__ == "__main__":
     # Dijkstras()
