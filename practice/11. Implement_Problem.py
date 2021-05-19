@@ -291,12 +291,12 @@ def dummy_game():
         return direction
 
     def simulate():
-        x, y = 1, 1     # 뱀 머리 위치
+        x, y = 1, 1  # 뱀 머리 위치
         data[x][y] = 2  # 뱀이 존재하는 위치는 2로 표시!
-        direction = 0   # 처음 보는 방향은 동쪽
-        time = 0        # 시작한 뒤에 지난 '초' 단위 시간
-        index = 0       # 다음에 회전할 정보
-        q = [(x, y)]    # 뱀이 차지하고 있는 위치 정보(꼬리가 앞쪽)
+        direction = 0  # 처음 보는 방향은 동쪽
+        time = 0  # 시작한 뒤에 지난 '초' 단위 시간
+        index = 0  # 다음에 회전할 정보
+        q = [(x, y)]  # 뱀이 차지하고 있는 위치 정보(꼬리가 앞쪽)
 
         while True:
             nx = x + dx[direction]
@@ -333,9 +333,145 @@ def dummy_game():
     print(simulate())
 
 
+'''
+# 기둥과 보 설치
+벽면의 크기 n, 기둥과 보를 설치하거나 삭제하는 작업이 순서대로 담긴 
+2차원 배열 build_frame이 매개변수로 주어질 때, 모든 명령어를 수행한 후 
+구조물의 상태를 return 하도록 solution 함수를 완성해주세요.
+
+## Developer`s Kick!
+기둥, 혹은 보를 설치/제거 한후 설치된 모든 기둥과 보들이 주어진 조건에 맞게 설치되어 있는지 확인한다.
+- x, y는 기둥, 보를 설치 또는 삭제할 교차점의 좌표이며, [가로 좌표, 세로 좌표] 형태입니다.
+- a는 설치 또는 삭제할 구조물의 종류를 나타내며, 0은 기둥, 1은 보를 나타냅니다.
+- b는 구조물을 설치할 지, 혹은 삭제할 지를 나타내며 0은 삭제, 1은 설치를 나타냅니다.
+- 벽면을 벗어나게 기둥, 보를 설치하는 경우는 없습니다.
+- 바닥에 보를 설치 하는 경우는 없습니다
+
+
+# 기둥 설치가 가능한경우 :
+1) 맨 밑에 있는 경우
+2) 설치 아래 지점에 기둥이 있는 경우
+3) 설치 왼쪽 지점에 보가 있는 경우
+4) 설치 지점에 보가 있는 경우
+::: 모든 조건을 만족하지 않으면 설치 불가능
+
+# 보 설치가 가능한경우 :
+1) 설치 아래 지점에 기둥이 있는 경우
+2) 설치 아래 오른쪽 지점에 기둥이 있는 경우
+3) 양 옆에 보가 있는 경우
+::: 모든 조건을 만족하지 않으면 설치 불가능
+'''
+
+'''
+# 현재 설치된 구조물이 '가능한' 구조물인지 확인하는 함수
+def possible(answer):
+    for x, y, stuff in answer:
+
+        # 0은 기둥, 1은 보
+        # 설치된 것이 '기둥'인 경우
+        if stuff == 0:
+            # '바닥 위' 혹은 '보의 한쪽 끝 부분 위' 혹은 '다른 기둥 위'라면 정상
+            if y == 0 or [x - 1, y, 1] in answer or [x, y, 1] in answer or [x, y - 1, 0] in answer:
+                continue
+            else:
+                return False
+        # 설치된 것이 '보'인 경우
+        elif stuff == 1:
+            # '한 쪽 끝 부분이 기둥 위' 혹은 '양쪽 끝 부분이 다른 보와 동시에 연결'이라면 정상
+            if [x, y - 1, 0] in answer or [x + 1, y - 1, 0] in answer or (
+                    [x - 1, y, 1] in answer or [x + 1, y, 1] in answer):
+                continue
+            else:
+                return False
+    return True
+'''
+PILLAR, BEAM = 0, 1
+def solution(n, build_frame):
+    answer = []
+    # 작업의 개수는 최대 1000개
+    for frame in build_frame:
+        x, y, stuff, operate = frame
+
+        # 설치하는 경우
+        if operate == 1:
+            # 기둥일 경우
+            if stuff == PILLAR:
+                if check_pillar([x, y], answer):
+                    answer.append(frame[:3])
+            # 보일 경우
+            else:
+                if check_bo([x, y], answer):
+                    answer.append(frame[:3])
+
+        # 삭제하는 경우
+        else:
+            temp = answer.copy()
+            temp.remove(frame[:3])
+            check = True
+            for t in temp:
+                x, y, stuff = t
+                # 기둥일 경우
+                if stuff == PILLAR:
+                    if not check_pillar([x, y], temp):
+                        check = False
+                        break
+                else:
+                    if not check_bo([x, y], temp):
+                        check = False
+                        break
+            if check:
+                answer = temp.copy()
+    answer.sort()
+    return answer
+
+# 설치된 것이 '기둥'인 경우
+def check_pillar(pillar_tc, answer):
+    x, y = pillar_tc
+    # 바닥인 경우 그냥 설치
+    if y == 0:
+        return True
+    # 바닥이 아니고 다른 기둥 위에 있거나 보의 한쪽 끝을 보는지 여부
+    if [x - 1, y, BEAM] in answer or [x, y, BEAM] in answer or [x, y - 1, PILLAR] in answer:
+        return True
+    return False
+
+# 설치된 것이 '보'인 경우
+def check_bo(beam_tc, answer):
+    x, y = beam_tc
+    # 한쪽 끝 부분이 기둥위에 있는 경우
+    if [x, y-1, PILLAR] in answer or [x+1, y-1, PILLAR] in answer:
+        return True
+    # 양쪽 끝 부분이 다른 보와 동시에 연결되어 있는 경우
+    if [x - 1, y, BEAM] in answer and [x + 1, y, BEAM] in answer:  # 양쪽 끝 부분이 다른 보와 동시에 연결되어 있거나
+        return True
+    return False
+
+
+'''
+def pillar_check(pillar_pos, answer):
+    x, y = pillar_pos
+    if y == 0: # 바닥일 경우는 그냥 설치
+        return True
+    # 바닥이 아니고 다른 기둥 위에 있거나 보의 한쪽 끝 부분 위에 있는지
+    if [x, y-1, PILLAR] in answer or [x-1, y, BEAM] in answer or [x, y, BEAM] in answer:
+        return True
+    return False
+
+def beam_check(beam_pos, answer):
+    x, y = beam_pos
+    if [x, y-1, PILLAR] in answer or [x+1, y-1, PILLAR] in answer: # 한쪽 끝 부분이 기둥위에 있거나
+        return True
+    if [x-1, y, BEAM] in answer and [x+1,y, BEAM] in answer: # 양쪽 끝 부분이 다른 보와 동시에 연결되어 있거나
+        return True
+    return False
+'''
+
+
+
 if __name__ == "__main__":
     # lucky_straight()
     # text_realign()
     # print(text_compressed("ababcdcdababcdcd"))
     # print(lock_key([[0, 0, 0], [1, 0, 0], [0, 1, 1]], [[1, 1, 1], [1, 1, 0], [1, 0, 1]]))
-    dummy_game()
+    # dummy_game()
+    print("Ade")
