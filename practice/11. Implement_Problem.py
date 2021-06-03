@@ -1,6 +1,7 @@
 '''
 # 구현문제
 '''
+from itertools import combinations, permutations
 
 '''
 # 럭키스트레이트 문제
@@ -466,6 +467,125 @@ def beam_check(beam_pos, answer):
     return False
 '''
 
+'''
+치킨 배달 문제
+크기 : M x N
+0 : 빈집
+1 : 가정집
+2 : 치킨집
+거리 : |(r1, c1)| - |(r2, c2)|
+
+# Developer`s Kick!
+- 모든 집에 대해 제일 가까운 치킨 집까지의 거리의 합을 출력
+
+Input01
+5 3
+0 0 1 0 0
+0 0 2 0 1
+0 1 2 0 0
+0 0 1 0 0
+0 0 0 0 2
+
+Input02
+5 2
+0 2 0 1 0
+1 0 1 0 0 
+0 0 0 0 0
+2 0 0 1 1
+2 2 0 1 2
+ 
+
+'''
+def chicken():
+
+    # 크기
+    n, m = map(int, input().split())
+
+    chicken, house = [], []
+
+    for r in range(n):
+        data = list(map(int, input().split()))
+        for c in range(n):
+            if data[c] == 1:
+                house.append((r, c))
+            elif data[c] == 2:
+                chicken.append((r, c))
+
+    # 모든 치킨 집 중에서 m개의 치킨 집을 뽑는 조합(combination)을 계산
+    candidates = list(combinations(chicken, m))
+
+    # 치킨 거리의 합을 계산하는 함수
+    def get_sum(candidates):
+        ret = 0
+
+        # 모든 집
+        for xx, yy in house:
+            # 가장 가까운 치킨 집 찾기
+            tmp = 1e9
+            for ax, ay in candidates:
+                tmp = min(tmp, abs(xx - ax) + abs(yy - ay))
+
+            # 가장 가까운 치킨집까지의 거리를 더하기
+            ret += tmp
+
+        # 치킨 거리의 합 return
+        return ret
+
+    ret = 1e9
+    for candidate in candidates:
+        ret = min(ret, get_sum(candidate))
+
+    print(ret)
+
+
+'''
+# 외벽점검 문제
+n       : 외벽의 길이(1 ~ 200)
+weak    : 취약지점 위치(1 ~ 15)
+dist    : 1시간동안 친구가 움직일 수 있는 거리(1 ~ 8)
+'''
+def wall_check(n, weak, dist):
+        # 길이를 2배로 늘려서 '원형'을 일자형태로 변환
+        length = len(weak)
+
+        for i in range(length):
+            weak.append(weak[i] + n)
+
+        # 투입할 친구 수의 최소값을 찾아야 하므로 len(dist) + 1
+        answer = len(dist) + 1
+
+        # 0부터 length - 1까지의 위치를 각각 시작점으로 설정
+        for start in range(length):
+            # 친구를 나열하는 모든 경우의 수 확인
+            for friend in list(permutations(dist, len(dist))):
+                # 투입할 친구의 수
+                cnt = 1
+
+                # 해당 친구가 점검할 수 있는 마지막 위치
+                position = weak[start] + friend[cnt - 1]
+
+                # 시작점부터 모든 취약 지점을 확인
+                for index in range(start, start + length):
+                    # 점검할 수 있는 위치를 벗어나는 경우
+                    if position < weak[index]:
+                        # 새로운 친구 투입
+                        cnt += 1
+
+                        # 투입이 불가하다면, 종료
+                        if cnt > len(dist):
+                            break
+
+                        # 친구가 확인할 수 있는 최대 거리 업데이트
+                        position = weak[index] + friend[cnt - 1]
+                # 최소값 계산
+                answer = min(answer, cnt)
+        if answer > len(dist):
+            return -1
+
+        return answer
+
+
+
 
 
 if __name__ == "__main__":
@@ -474,4 +594,5 @@ if __name__ == "__main__":
     # print(text_compressed("ababcdcdababcdcd"))
     # print(lock_key([[0, 0, 0], [1, 0, 0], [0, 1, 1]], [[1, 1, 1], [1, 1, 0], [1, 0, 1]]))
     # dummy_game()
-    print("Ade")
+    chicken()
+    # print("Ade")
