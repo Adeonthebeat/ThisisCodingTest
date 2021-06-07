@@ -24,7 +24,7 @@ from collections import deque
 # 특정 거리의 도시 찾기
 # Developer`s Kick!
  - 모든 도로의 거리는 1 = 모든 간선의 비용이 1
- - 모든 도로의 거리는 1이라는 조건 덕분에 너비우선탐색을 이용해 간단히 해결!
+ - 모든 도로의 거리는 1이라는 조건 덕분에 너비우선탐색(BFS)을 이용해 간단히 해결!
  
 Input1
 4 4 2 1
@@ -57,8 +57,6 @@ Output3
 3
 
 '''
-
-
 def find_city():
     # 도시의 개수, 도로의 개수, 거리 정보, 출발 도시 번호
     n, m, k, x = map(int, input().split())
@@ -218,12 +216,85 @@ def research_virus():
 
 '''
 # 경쟁적 전염 문제
+ - N : 시험관 정보
+ - K : 바이러스 정보
+ - S : 시간(초)
 # Developer`s Kick!
- - 
+ - 너비우선탐색(BFS)를 이용한 문제
+ - 각 바이러스는 낮은 번호부터 증식 ->> 큐에 낮은 바이러스의 번호부터 삽입
+ - 너비우선탐색을 수행하여 방문하지 않은 위치를 차례대로 방문
+
+Input1
+3 3
+1 0 2
+0 0 0 
+3 0 0
+2 3 2
+
+Output1
+3
+
+Input2
+3 3
+1 0 2
+0 0 0 
+3 0 0
+1 2 2
+
+Output2
+0
+
+
 '''
 def infection():
-    return ""
+
+    n, k = map(int, input().split())
+
+    # 전체 보드 정보를 담는 리스트
+    graph = []
+    # 바이러스 정보를 담는 리스트
+    data = []
+
+    for i in range(n):
+        # 보드 정보를 한 줄 단위로 입력
+        graph.append(list(map(int, input().split())))
+        for j in range(n):
+            # 해당 위치에 바이러스가 존재할 경우
+            if graph[i][j] != 0:
+                # (바이러스 종류, 시간, 위치 X, 위치 Y) 삽입
+                data.append((graph[i][j], 0, i, j))
+
+    data.sort()
+    q = deque(data)
+
+    target_s, target_x, target_y = map(int, input().split())
+
+    # 바이러스가 퍼져나갈 수 있는 4가지 위치
+    dx = [-1, 0, 1, 0]
+    dy = [0, 1, 0, -1]
+
+    while q:
+        virus, s, x, y = q.popleft()
+        # 정확하게 s초가 지나거나, 큐가 빌 때까지 반복
+        if s == target_s:
+            break
+
+        # 현재 노드에서 주변 4가지 위치를 각각 확인
+        for i in range(4):
+            nx = x + dx[i]
+            ny = y + dy[i]
+
+            # 해당 위치로 이동할 수 있는 경우
+            if 0 <= nx < n and 0 <= ny < n:
+                # 아직 방문하지 않은 위치라면, 그 위치에 바이러스 넣기
+                if graph[nx][ny] == 0:
+                    graph[nx][ny] = virus
+                    q.append((virus, s+1, nx, ny))
+
+    print(graph[target_x - 1][target_y - 1])
+
 
 if __name__ == "__main__":
     # find_city()
-    research_virus()
+    # research_virus()
+    infection()
