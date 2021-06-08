@@ -293,8 +293,75 @@ def infection():
 
     print(graph[target_x - 1][target_y - 1])
 
+'''
+# 괄호변환 문제
+ - 괄호가 올바른지 체크하는 문제
+# Developer`s Kick!
+ - 재귀적 함수 호출로 해결
+'''
+def parenthesis(p):
+
+    # '균형 잡힌 괄호 문자열'의 인덱스 변환
+    def balanced_index(p):
+        # 왼쪽 괄호 개수
+        cnt = 0
+        for i in range(len(p)):
+            if p[i] == '(':
+                cnt += 1
+            else:
+                cnt -= 1
+            if cnt == 0:
+                return i
+
+    # '올바른 괄호 문자열'인지 체크
+    def check_proper(p):
+        # 왼쪽 괄호 개수
+        cnt = 0
+        for i in p:
+            if i == '(':
+                cnt += 1
+            else:
+                # 쌍이 맞지 않은 경우 False return
+                if cnt == 0:
+                    return False
+                cnt -= 1
+        return True
+
+    def solution(p):
+        answer = ''
+        if p == '':
+            return answer
+
+        index = balanced_index(p)
+        u = p[:index+1]     # 예를 들어 올바른 괄호 문자열이라면 v는 빈문자열이 될 수도 있음
+        v = p[index+1:]
+
+
+        # '올바른 괄호 문자열'이면, v에 대해 함수를 수행한 결과를 붙여 반환
+        if check_proper(u):
+            answer = u + solution(v)
+
+        # '올바른 괄호 문자열'이 아니라면, 아래의 과정을 수행
+        else:
+            answer = '('
+            answer += solution(v)
+            answer += ')'
+            # 첫번째와 마지막 문자를 제거
+            u = list(u[1:-1])
+            for i in range(len(u)):
+                if u[i] == '(':
+                    u[i] = ')'
+                else:
+                    u[i] = '('
+            answer += "".join(u)
+
+        return answer
+    solution(p)
+
+
 
 if __name__ == "__main__":
     # find_city()
     # research_virus()
-    infection()
+    # infection()
+    parenthesis("()))((()")
