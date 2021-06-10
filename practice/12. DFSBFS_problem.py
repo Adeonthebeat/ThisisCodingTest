@@ -358,10 +358,97 @@ def parenthesis(p):
         return answer
     solution(p)
 
+'''
+# 연산자 끼어넣기
+ - 연산자는 주어진 순서대로 함
+ - 연산자 우선순위는 무시함
+ - 만들 수 있는 식의 결과가 최대, 최소값을 구하세요
+# Developer`s Kick!
+ - 수가 주어졌을 때, 각 수와 수 사이에 사칙연산 중 하나를 삽입하는 모든 경우의 최대값, 최소값을 구하는 문제
+ - 모든 경우의 수를 계산하기 위해 완전탐색 (DFS/BFS)를 이용하여 문제를 해결할 수 있음
 
+Input1
+2
+5 6
+0 0 1 0
+
+Output1
+30
+30
+
+Input2
+3
+3 4 5
+1 0 1 0
+
+Output2
+35
+17
+
+Input3
+6
+1 2 3 4 5 6
+2 1 1 1
+
+Output3
+54
+-24
+'''
+def operator():
+
+    # 수의 개수
+    n = int(input())
+
+    # 연산을 수행하고자 하는 수 리스트
+    data = list(map(int, input().split()))
+
+    # 연산자
+    add, sub, mul, div = map(int, input().split())
+
+    # 최소값, 최대값 초기화
+    min_value = 1e9
+    max_value = -1e9
+
+    def dfs(i, now):
+        global min_value, max_value, add, sub, mul, div
+
+        # 모든 연산자를 다 사용한 경우, 최소값과 최대값 업데이트
+        if i == n:
+            min_value = min(min_value, now)
+            max_value = max(max_value, now)
+
+        else:
+            # 각 연산자에 대하여 재귀적으로 수행
+            if add > 0:
+                add -= 1
+                dfs(i + 1, now + data[i])
+                add += 1
+            if sub > 0:
+                sub -= 1
+                dfs(i + 1, now - data[i])
+                sub += 1
+            if mul > 0:
+                mul -= 1
+                dfs(i + 1, now * data[i])
+                mul += 1
+            if div > 0:
+                div -= 1
+                dfs(i + 1, int(now / data[i]))
+                div += 1
+    dfs(1, data[0])
+
+    # 최대값, 최소값 차례대로 출력
+    print(max_value)
+    print(min_value)
+
+'''
+
+'''
 
 if __name__ == "__main__":
     # find_city()
     # research_virus()
     # infection()
-    parenthesis("()))((()")
+    # parenthesis("()))((()")
+    # operator()
+    print('ade')
