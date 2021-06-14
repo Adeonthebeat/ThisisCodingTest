@@ -19,6 +19,7 @@ DFS/BFS 문제
  자연스럽게 먼저 들어온 것은 먼저 나가가게 되어 가까운 노드부터 탐색
 '''
 from collections import deque
+from itertools import combinations
 
 '''
 # 특정 거리의 도시 찾기
@@ -442,8 +443,130 @@ def operator():
     print(min_value)
 
 '''
+# 감시피하기 문제
+ - S : student
+ - T : teacher
+ - O : obstacle
+ - X : space
+# Developer`s Kick!
+ - 장애물을 정확히 3개 설치하는 모든 경우의 수를 확인하며, 모든 학생이 감시로부터 피하도록 할 수 있는지 여부를 출력
+ - 복도의 크키는 N x N이며, N은 최대 6개
+ - 장애물을 정확히 3개 설치하는 모든 조합의 수는 36C3이며, 10000개 이하의 수는 완전탐색으로 해결할 수 있음
+ - DFS / BFS를 이용하여 문제를 해결
+ 
+Input01
+5
+X S X X T
+T X S X X
+X X X X X
+X T X X X
+X X T X X
+
+Output01
+YES
+
+Input02
+4
+S S S T
+X X X X
+X X X X
+T T T X
+
+Output02
 
 '''
+def surveilance():
+    n = int(input())    # 복도의 크기
+    board = []          # 복도 정보(NxN)
+    teachers = []       # 모든 선생님의 위치 정보
+    spaces = []         # 모든 빈 공간 위치 정보
+
+    # 위치 정보 저장
+    for i in range(n):
+        board.append(list(input().split()))
+
+        for j in range(n):
+            # 선생님이 존재하는 위치 저장
+            if board[i][j] == 'T':
+                teachers.append((i, j))
+            if board[i][j] == 'X':
+                spaces.append((i, j))
+
+    # 특정 방향으로 감시를 진행(학생 발견 : True / 학생 미발견 : False)
+    def watch(x, y, direction):
+        # 왼쪽 방향 감시
+        if direction == 0:
+            while y >= 0:
+                # 학생이 있는 경우
+                if board[x][y] == 'S':
+                    return True
+                # 장애물이 있는 경우
+                if board[x][y] == 'O':
+                    return False
+                y -= 1
+        # 오른쪽 방향 감시
+        if direction == 1:
+            while y < n:
+                # 학생이 있는 경우
+                if board[x][y] == 'S':
+                    return True
+                # 장애물이 있는 경우
+                if board[x][y] == 'O':
+                    return False
+                y += 1
+        # 위쪽 방향 감시
+        if direction == 2:
+            while x >= 0:
+                # 학생이 있는 경우
+                if board[x][y] == 'S':
+                    return True
+                # 장애물이 있는 경우
+                if board[x][y] == 'O':
+                    return False
+                x -= 1
+        # 아랫쪽 방향 감시
+        if direction == 3:
+            while x < n:
+                # 학생이 있는 경우
+                if board[x][y] == 'S':
+                    return True
+                # 장애물이 있는 경우
+                if board[x][y] == 'O':
+                    return False
+                x += 1
+        return False
+
+    # 장애물 설치 후, 한명이라도 학생이 감지되는지 검사
+    def process():
+        # 모든 선생님의 위치를 하나씩 확인
+        for x, y in teachers:
+            # 4가지 방향으로 학생을 감지할 수 있는지 확인
+            for i in range(n):
+                if watch(x, y, i):
+                    return True
+        return False
+
+    # 학생이 한 명도 감지되지 않도록 설치할 수 있는지 여부
+    find = False
+
+    # 빈 공간에서 3개를 뽑는 모든 조합 확인
+    for data in combinations(spaces, 3):
+        # 장애물 설치하기
+        for x, y in data:
+            board[x][y] = 'O'
+        # 학생이 감지가 안 될 경우
+        if not process():
+            find = True
+            break
+
+        # 학생이 감지가 안 될 경우
+        for x, y in data:
+            board[x][y] = 'X'
+
+    if find:
+        print('YES')
+    else:
+        print('NO')
 
 if __name__ == "__main__":
     # find_city()
@@ -451,4 +574,4 @@ if __name__ == "__main__":
     # infection()
     # parenthesis("()))((()")
     # operator()
-    print('ade')
+    surveilance()
