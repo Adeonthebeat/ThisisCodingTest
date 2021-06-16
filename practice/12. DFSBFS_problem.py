@@ -58,6 +58,8 @@ Output3
 3
 
 '''
+
+
 def find_city():
     # 도시의 개수, 도로의 개수, 거리 정보, 출발 도시 번호
     n, m, k, x = map(int, input().split())
@@ -94,6 +96,7 @@ def find_city():
 
     if check is False:
         print(-1)
+
 
 '''
 # 연구소 문제
@@ -142,8 +145,9 @@ Output3
 3
 
 '''
-def research_virus():
 
+
+def research_virus():
     # 지도의 맵
     n, m = map(int, input().split())
 
@@ -211,6 +215,7 @@ def research_virus():
                     dfs(count)
                     data[i][j] = 0
                     count -= 1
+
     dfs(0)
     print(ret)
 
@@ -247,8 +252,9 @@ Output2
 
 
 '''
-def infection():
 
+
+def infection():
     n, k = map(int, input().split())
 
     # 전체 보드 정보를 담는 리스트
@@ -290,9 +296,10 @@ def infection():
                 # 아직 방문하지 않은 위치라면, 그 위치에 바이러스 넣기
                 if graph[nx][ny] == 0:
                     graph[nx][ny] = virus
-                    q.append((virus, s+1, nx, ny))
+                    q.append((virus, s + 1, nx, ny))
 
     print(graph[target_x - 1][target_y - 1])
+
 
 '''
 # 괄호변환 문제
@@ -300,8 +307,9 @@ def infection():
 # Developer`s Kick!
  - 재귀적 함수 호출로 해결
 '''
-def parenthesis(p):
 
+
+def parenthesis(p):
     # '균형 잡힌 괄호 문자열'의 인덱스 변환
     def balanced_index(p):
         # 왼쪽 괄호 개수
@@ -334,9 +342,8 @@ def parenthesis(p):
             return answer
 
         index = balanced_index(p)
-        u = p[:index+1]     # 예를 들어 올바른 괄호 문자열이라면 v는 빈문자열이 될 수도 있음
-        v = p[index+1:]
-
+        u = p[:index + 1]  # 예를 들어 올바른 괄호 문자열이라면 v는 빈문자열이 될 수도 있음
+        v = p[index + 1:]
 
         # '올바른 괄호 문자열'이면, v에 대해 함수를 수행한 결과를 붙여 반환
         if check_proper(u):
@@ -357,7 +364,9 @@ def parenthesis(p):
             answer += "".join(u)
 
         return answer
+
     solution(p)
+
 
 '''
 # 연산자 끼어넣기
@@ -395,8 +404,9 @@ Output3
 54
 -24
 '''
-def operator():
 
+
+def operator():
     # 수의 개수
     n = int(input())
 
@@ -436,11 +446,13 @@ def operator():
                 div -= 1
                 dfs(i + 1, int(now / data[i]))
                 div += 1
+
     dfs(1, data[0])
 
     # 최대값, 최소값 차례대로 출력
     print(max_value)
     print(min_value)
+
 
 '''
 # 감시피하기 문제
@@ -475,11 +487,13 @@ T T T X
 Output02
 
 '''
+
+
 def surveilance():
-    n = int(input())    # 복도의 크기
-    board = []          # 복도 정보(NxN)
-    teachers = []       # 모든 선생님의 위치 정보
-    spaces = []         # 모든 빈 공간 위치 정보
+    n = int(input())  # 복도의 크기
+    board = []  # 복도 정보(NxN)
+    teachers = []  # 모든 선생님의 위치 정보
+    spaces = []  # 모든 빈 공간 위치 정보
 
     # 위치 정보 저장
     for i in range(n):
@@ -568,10 +582,149 @@ def surveilance():
     else:
         print('NO')
 
+
+'''
+# 인구이동문제
+ - 국경선을 공유하는 두 나라의 인구차이가 L명 이상 R이하라면, 두 나라가 공유하는 국경선을 오늘 하루동안 오픈
+ - 국경선이 모두 열리게 되면, 인구이동을 시작
+ - 국경선이 열려 있어 인접한 칸만을 이용해 이동할 수 있으면, 그 나라를 하루동안 '연합'이라고 함
+ - 연합을 이루고 있는 각 칸의 인구수는 (연합의 인구수) / (연합을 이루고 있는 칸의 개수) ->> 소수점 제외
+ - 연합을 해체하고 모든 국경선을 Close
+ - N : 각 나라의 인구수
+ - L : 인구차이의 최소값
+ - R : 인구차이의 최대값
+ - 인구이동수 <= 2000
+# Developer`s Kick!
+ - 전형적인 DFS/BFS 문제
+ - 상하좌우 필요
+ - BFS 수행 후, 인접한 나라의 인구수를 확인 후, 인구이동 처리 진행
+ - 음료수 얼려먹기 문제와 유사
+ 
+Input01
+2 20 50
+50 30
+20 40
+
+Output01
+1
+
+Input02
+2 40 50
+50 30
+20 40
+
+Output02
+0
+
+Input03
+2 20 50
+50 30
+30 40
+
+Output03
+1
+
+Input04
+3 5 10
+10 15 20
+20 30 25
+40 22 10
+
+Output04
+2
+
+Input05
+4 10 50
+10 100 20 90
+80 100 60 70
+70 20 30 40
+50 20 100 10
+
+Output05
+3
+
+'''
+
+
+def population_move():
+    # 땅의 크기(N), L, R
+    n, l, r = map(int, input().split())
+
+    # 전체 나라의 정보(N x N)를 입력받기
+    graph = []
+    for _ in range(n):
+        graph.append(list(map(int, input().split())))
+
+    dx = [-1, 0, 1, 0]
+    dy = [0, -1, 0, 1]
+
+    # 특정위치에서 출발하여 모든 연합을 체크한 뒤, 데이터 갱신
+    def process(x, y, index):
+        # (x, y)의 위치와 연결된 나라(연합) 정보를 담는 리스트
+        united = []
+        united.append((x, y))
+
+        # 너비 우선 탐색(BFS)을 위한 큐 자료구조 정의
+        q = deque()
+        q.append((x, y))
+
+        # 현재 연합의 번호 할당
+        union[x][y] = index
+
+        # 현재 연합의 전체 인구 수
+        summary = graph[x][y]
+
+        # 현재 연합의 국가 수
+        cnt = 1
+
+        # 큐가 빌 때까지 반복(BFS)
+        while q:
+            x, y = q.popleft()
+            for i in range(4):
+                nx = x + dx[i]
+                ny = y + dy[i]
+
+                # 바로 옆에 있는 나라를 확인
+                if 0 <= nx < n and 0 <= ny < n and union[nx][ny] == -1:
+                    # 옆에 있는 나라와 인구 차이가 L명 이상, R명 이하라면
+                    if l <= abs(graph[nx][ny] - graph[x][y]) <= r:
+                        q.append((nx, ny))
+
+                        # 연합에 추가
+                        union[nx][ny] = index
+                        summary += graph[nx][ny]
+                        cnt += 1
+                        united.append((nx, ny))
+
+        # 연합 국가끼리 인구를 분배
+        for xx, yy in united:
+            graph[xx][yy] = summary // cnt
+
+    total_count = 0
+
+    # 더 이상 인구 이동을 할 수 없을 때까지 반복
+    while True:
+        union = [[-1] * n for _ in range(n)]
+        index = 0
+        for i in range(n):
+            for j in range(n):
+                if union[i][j] == -1:
+                    process(i, j, index)
+                    index += 1
+        # 모든 인구 이동이 끝난 경우
+        if index == n * n:
+            break
+        total_count += 1
+
+    # 인구 이동 횟수 출력
+    print(total_count)
+
+
 if __name__ == "__main__":
     # find_city()
     # research_virus()
     # infection()
     # parenthesis("()))((()")
     # operator()
-    surveilance()
+    # surveilance()
+    population_move()
