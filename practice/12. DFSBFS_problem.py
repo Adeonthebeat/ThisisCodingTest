@@ -719,6 +719,102 @@ def population_move():
     # 인구 이동 횟수 출력
     print(total_count)
 
+'''
+# 블록 이동하기 문제
+ - 로봇 크기 : (2,1)
+ - 0 : 도로 | 1 : 벽
+ - 로봇은 90도 회전 가능
+ - 최소 필요시간 
+# Developer`s Kick!
+ - BFS 문제
+ - 로봇을 (1,1)에서 (N,N)으로 이동시키는 최단거리 문제
+ - 위치 정보를 튜플로 처리
+ - 로봇의 상태 : {(1, 1), (1, 2)} | {(1, 2), (1, 1)}
+
+'''
+def block_move():
+
+    def get_next_pos(pos, board):
+        # 반환결과(이동 가능한 위치)
+        next_pos = []
+
+        # 현재 위치 정보를 리스트로 변환 ( 집합 -> 리스트 )
+        pos = list(pos)
+
+        pos1_x, pos1_y, pos2_x, pos2_y = pos[0][0], pos[0][1], pos[1][0], pos[1][1]
+
+        # 상, 하, 좌, 우로 이동하는 경우에 대한 처리
+        dx = [-1, 1, 0, 0]
+        dy = [0, 0, -1, 1]
+
+        for i in range(4):
+            pos1_next_x, pos1_next_y, pos2_next_x, pos2_next_y = pos1_x + dx[i], pos1_y + dy[i], pos2_x + dx[i], pos2_y + dy[i]
+
+            # 이동하고자 하는 두 칸이 모두 비어있다면.
+            if board[pos1_next_x][pos1_next_y] == 0 and board[pos2_next_x][pos2_next_y] == 0:
+                next_pos.append({(pos1_next_x, pos1_next_y), (pos2_next_x, pos2_next_y)})
+
+            # 현재 로봇이 가로로 놓인 경우.
+            if pos1_x == pos2_x:
+                # 위쪽으로 회전하거나, 아래쪽으로 회전
+                for i in [-1, 1]:
+                    # 위쪽 혹은 아래쪽 두 칸이 비어있다면.
+                    if board[pos1_x + i][pos1_y] == 0 and board[pos2_x + i][pos2_y] == 0:
+                        next_pos.append({(pos1_x, pos1_y), (pos1_x + i, pos1_y)})
+                        next_pos.append({(pos2_x, pos2_y), (pos2_x + i, pos2_y)})
+
+            # 현재 로봇이 세로로 놓인 경우.
+            elif pos1_y == pos2_y:
+                # 왼쪽으로 회전하거나, 오른쪽으로 회전
+                for i in [-1, 1]:
+                    if board[pos1_x][pos1_y + i] == 0 and board[pos2_x][pos2_y + i] == 0:
+                        next_pos.append({(pos1_x, pos1_y), (pos1_x, pos1_y + i)})
+                        next_pos.append({(pos2_x, pos2_y), (pos2_x, pos2_y + i)})
+
+            # 현재 위치에서 이동할 수 있는 위치를 반환
+            return next_pos
+
+    def solution(board):
+        # 맵의 외곽에 벽을 두는 형태로 맵 변형
+        n = len(board)
+        new_board = [[1] * (n + 2) for _ in range(n + 2)]
+
+        for i in range(n):
+            for j in range(n):
+                new_board[i + 1][j + 1] = board[i][j]
+
+        # 너비우선탐색(BFS) 수행
+        q = deque()
+        visited = []
+
+        # 시작 위치 설정
+        pos = {(1, 1), (1, 2)}
+
+        # 큐에 삽입 후
+        q.append((pos, 0))
+
+        # 방문처리 <- 시작위치 방문
+        visited.append(pos)
+
+        # 큐가 빌 때까지 반복
+        while q:
+            pos, cost = q.popleft()
+
+            # (n, n) 위치에 로봇이 도달했다면, 최단거리로 반환
+            if (n, n) in pos:
+                return cost
+
+            # 현재 위치에서 이동할 수 있는 위치 확인
+            for next_pos in get_next_pos(pos, new_board):
+                # 아직 방문하지 않은 위치라면, 큐를 삽입하고 방문처리
+                if next_pos not in visited:
+                    q.append((next_pos, cost + 1))
+                    visited.append(next_pos)
+        return 0
+
+
+
+
 
 if __name__ == "__main__":
     # find_city()
