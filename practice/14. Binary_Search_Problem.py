@@ -1,0 +1,160 @@
+'''
+[이진탐색 알고리즘]
+탐색범위를 반으로 줄여나가면서 데이터를 빠르게 탐색하는 기법
+이진탐색은 배열 내부의 데이타 정렬되어 있을 때만 사용할 수 있음
+이진탐색 알고리즘에서는 3가지 변수 사용 ( 시작점, 끝점, 중간점 )
+시작점, 끝점은 탐색하고자 하는 범위를 나타내기 위해 사용하며, 탐색범위의 중간점에 있는 테이터와 찾고자 하는 데이터를 비교
+
+[bisect 클래스]
+단순히 정렬된 배열에서 특정한 데이터를 찾도록 요구하는 문제에서는
+이진탐색을 직접 구현할 필요없이 단순히 파이썬의 표준 라이브러리 중에서 bisect 모듈을 사용
+'''
+from bisect import bisect, bisect_left, bisect_right
+
+'''
+# 정렬된 배열에서 특정 수의 개수 구하기
+ - N개의 원소를 포함하고 있는 수열이 오름차순으로 정렬
+ - 이 수열에서 x가 등장하는 횟수를 계산 
+# Developer`s Kick!
+ - 
+ 
+Input01
+7 2
+1 1 2 2 2 2 3 3
+
+Output01
+4
+
+Input02
+7 4
+1 1 2 2 2 2 3 3
+
+Output02
+-1
+'''
+
+'''
+def count():
+    n, x = map(int, input().split())
+
+    data = list(map(int, input().split()))
+    data.sort()
+
+    if data.count(x) == 0:
+        print(-1)
+    else:
+        print(data.count(x))
+'''
+# 정렬된 수열에서 값이 x인 원소의 개수를 세는 메소드
+def count_by_value(array, x):
+
+
+    # 데이터 개수
+    n = len(array)
+
+    # x가 처음 등장한 인덱스 계산
+    a = first(array, x, 0, n-1)
+
+    # 수열에 x가 존재하지 않은 경우
+    if a is None:
+        # 값이 x인 원소의 개수는 0개이므로 0 반환
+        return 0
+
+    # x가 마지막 등장한 인덱스 계산
+    b = last(array, x, 0, n-1)
+
+    # 개수 반환
+    return b - a + 1
+
+# 처음 위치를 찾는 이진탐색 메소드
+def first(array, target, start, end):
+    if start > end:
+        return None
+
+    mid = (start + end) // 2
+
+    # 해당 값을 가지는 원소 중에서 가장 왼쪽에 있는 경우, 인덱스 반환
+    if mid == 0 or target > array[mid - 1] and array[mid] == target:
+        return mid
+
+    # 중간점의 값보다 찾고자 하는 값이 작거나 같은 경우, 왼쪽 확인
+    elif array[mid] >= target:
+        return first(array, target, start, mid - 1)
+
+    # 중간점의 값보다 찾고자 하는 값이 큰 경우, 오른쪽 확인
+    else:
+        return first(array, target, mid + 1, end)
+
+def last(array, target, start, end):
+    if start > end:
+        return None
+
+    n = len(array)
+
+    mid = (start + end) // 2
+
+    # 해당 값을 가지는 원소 중에서 가장 오른쪽에 있는 경우, 인덱스 반환
+    if (mid == n - 1 or target < array[mid + 1]) and array[mid] == target:
+        return mid
+
+    # 중간점의 값보다 찾고자 하는 값이 작은 경우, 왼쪽을 확인
+    elif array[mid] > target:
+        return last(array, target, start, mid - 1)
+
+    # 중간점의 값보다 찾고자 하는 값이 크거나 같은 경우, 오른쪽을 확인
+    else:
+        return last(array, target, mid + 1, end)
+
+def solution():
+
+    # 데이터 개수 N, 찾고자 하는 값 x 입력 받기
+    n, x = map(int, input().split())
+
+    # 전체 데이터 입력받기
+    array = list(map(int, input().split()))
+
+    # 값이 x인 데이터 개수 계산
+    # cnt = count_by_value(array, x)
+    cnt = count_by_range(array, x, x)
+
+
+    # 값이 x인 원소가 존재하지 않는다면.
+    if cnt == 0:
+        print(-1)
+    # 값이 x인 원소가 존재한다면.
+    else:
+        print(cnt)
+
+'''
+# 정렬된 배열에서 특정 수의 개수 구하기 - Library Version
+ - N개의 원소를 포함하고 있는 수열이 오름차순으로 정렬
+ - 이 수열에서 x가 등장하는 횟수를 계산 
+# Developer`s Kick!
+ - bisect 사용
+ 
+Input01
+7 2
+1 1 2 2 2 2 3 3
+
+Output01
+4
+
+Input02
+7 4
+1 1 2 2 2 2 3 3
+
+Output02
+-1
+'''
+
+# 값이 [left_value, right_value]인 데이터 개수를 반환하는 함수
+def count_by_range(array, left_value, right_value):
+    right_index = bisect_right(array, right_value)
+    left_index = bisect_left(array, left_value)
+    return right_index - left_index
+
+
+
+
+if __name__ == "__main__":
+    solution()
