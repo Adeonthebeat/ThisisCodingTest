@@ -153,8 +153,70 @@ def count_by_range(array, left_value, right_value):
     left_index = bisect_left(array, left_value)
     return right_index - left_index
 
+'''
+# 고정점 찾기
+ - 고정점이란? 수열의 원소 중에서 그 값이 인덱스와 동일 원소를 의미
+ - 고정점을 출력하는 프로그램을 작성
+# Developer`s Kick!
+ - 
+ 
+Input01
+5
+-15 -6 1 3 7
 
+Output01
+3
+
+Input02
+7
+-15 -4 2 8 13 15
+
+Output02
+2
+
+Input03
+7
+-15 -4 8 9 13 15
+
+Output03
+-1
+'''
+# 이진 탐색 소스코드( 재귀 함수 )
+def binary_search(array, start, end):
+    if start > end:
+        return None
+    
+    mid = (start + end) // 2
+    
+    # 고정점을 찾은 경우, 인덱스 반환
+    if array[mid] == mid:
+        return mid
+    
+    # 중간점이 가리키는 위치의 값보다 중간점이 작은 경우, 왼쪽 확인
+    elif array[mid] > mid:
+        return binary_search(array, start, mid - 1)
+
+    # 중간점이 가리키는 위치의 값보다 중간점이 큰 경우, 오른쪽 확인
+    else:
+        return binary_search(array, mid + 1, end)
+    
+def fixed_point():
+
+    n = int(input())
+    array = list(map(int, input().split()))
+
+    # 이진탐색(binary search) 수행
+    index = binary_search(array, 0, n - 1)
+
+    # 고정점이 없는 경우, -1 출력
+    if index is None:
+        print(-1)
+
+    # 고정점이 있는 경우, 해당 인덱스 출력
+    else:
+        print(index)
 
 
 if __name__ == "__main__":
-    solution()
+    # solution()
+    fixed_point()
