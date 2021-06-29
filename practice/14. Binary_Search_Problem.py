@@ -10,6 +10,7 @@
 이진탐색을 직접 구현할 필요없이 단순히 파이썬의 표준 라이브러리 중에서 bisect 모듈을 사용
 '''
 from bisect import bisect, bisect_left, bisect_right
+from builtins import input
 
 '''
 # 정렬된 배열에서 특정 수의 개수 구하기
@@ -158,7 +159,8 @@ def count_by_range(array, left_value, right_value):
  - 고정점이란? 수열의 원소 중에서 그 값이 인덱스와 동일 원소를 의미
  - 고정점을 출력하는 프로그램을 작성
 # Developer`s Kick!
- - 
+ - 선형탐색 X
+ - 이진탐색으로 해결!
  
 Input01
 5
@@ -216,7 +218,74 @@ def fixed_point():
     else:
         print(index)
 
+'''
+# 공유기 설치
+ - C개의 공유기를 N개의 집에 적당히 설치해서 가장 인접한 두 공유기 사아의 거리를 최대로 하는 프로그램 작성
+# Developer`s Kick!
+ - 파라메트릭 서치 유형 문제
+ - C개의 공유기보다 많은 수의 공유기 설치가 가능하다면, 가장 인접한 두 공유기 사이의 거리 값을 증가시켜서 
+   더 큰 값에 대해서도 성립하는지 체크하기 위해 다시 탐색을 수행함
+
+Input01
+5 3
+1
+2
+8
+4
+9
+
+Output01
+3
+
+'''
+def wifi():
+    # 집의 개수(N)와 공유기 개수(C) 입력
+    n, c = map(int, input().split())
+
+    # 전체 집의 좌표 정보를 입력받기
+    array = []
+    for _ in range(n):
+        array.append(int(input()))
+
+    # 이진 탐색 수행을 위한 정렬 수행
+    array.sort()
+
+    # 가능한 최소 거리(min gap)
+    start = 1
+
+    # 가능한 최대 거리(max gap)
+    end = array[-1] - array[0]
+
+    ret = 0
+
+    while (start <= end):
+        # mid는 가장 인접한 두 공유기 사이의 거리(gap)를 의미
+        mid = (start + end) // 2
+        value = array[0]
+        cnt = 1
+
+        # 현재 mid 값을 이용해 공유기 설치
+        for i in range(1, n): # 앞에서부터 차근차근 설치
+            if array[i] >= value + mid:
+                value = array[i]
+                cnt += 1
+        # C개 이상의 공유기를 설치할 수 있는 경우, 거리 증가
+        if cnt >= c:
+            start = mid + 1
+
+            # 최적의 결과 저장
+            ret = mid
+
+        # C개 이상의 공유기를 설치할 수 없는 경우, 거리 감소
+        else:
+            end = mid - 1
+
+    print(ret)
+
+
+
 
 if __name__ == "__main__":
     # solution()
-    fixed_point()
+    # fixed_point()
+    wifi()
