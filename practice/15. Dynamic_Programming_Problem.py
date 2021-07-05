@@ -190,7 +190,107 @@ def resignation():
     print(max_value)
 
 
+'''
+# 병사 배치하기 문제
+ - N명의 병사가 무작위로 나열
+ - 각 병사는 전투력을 보유하고 있으며, 전투력이 높은 순으로 내림차순으로 배치
+ - 즉, 앞의 병사의 전투력이 뒤 병사의 전투력보다 높아야 함
+ - 남아 있는 병사의 수가 최대가 되도록 하시오. 
+# Developer`s Kick!
+ - 가장 긴 증가하는 부분 수열 문제: 하나의 수열이 주어졌을 때, 값이 증가하는 형태의 가장 긴 부분 수열을 찾는 문제
+ arr = {10, 20, 10, 30, 20, 50} => {10, 20, 30, 50}
+ - D[i] = arr[i]를 마지막 원소로 가지는 부분 수열의 최대 길이
+ - 점화식 : D[i] = max(D[i], D[j] + 1) if arr[j] < arr[i] 
+
+Input01
+7
+15 11 4 8 5 2 4
+
+Output01  
+2
+'''
+
+
+def soldier():
+    n = int(input())
+    array = list(map(int, input().split()))
+
+    # 순서를 뒤집어 '가장 긴 증가하는 부분 수열' 문제로 변환
+    array.reverse()
+
+    # 다이나믹 프로그래밍을 위한 1차원 DP 테이블
+    dp = [1] * n
+
+    # 가장 긴 증가하는 부분 수열(LIS) 알고리즘 수행
+    for i in range(1, n):
+        for j in range(0, i):
+            if array[j] < array[i]:
+                dp[i] = max(dp[i], dp[j] + 1)
+
+    # 열외시켜줘야 하는 병사의 최소수를 출력
+    print(n - max(dp))
+
+
+'''
+# 못생긴 수 문제
+ - 소인수로 가지는 수( 2, 3, 5 )
+ - 1을 포함 
+# Developer`s Kick!
+ - 2의 배수, 3의 배수, 5의 배수 = 못생긴 수
+
+Input01
+10
+
+Output01
+12 
+
+Input02
+4
+
+Output02
+4
+
+'''
+
+
+def ugly_number():
+    n = int(input())
+
+    # 못생긴 수를 담기 위한 DP 테이블
+    ugly = [0] * n
+
+    # 첫 번째 못생긴 수는 1
+    ugly[0] = 1
+
+    # 2배, 3배, 5배를 위한 인덱스
+    i2 = i3 = i5 = 0
+
+    # 처음에 곱셉값을 초기화
+    next2, next3, next5 = 2, 3, 5
+
+    # 1부터 n까지의 못생긴 수 찾기
+    for i in range(1, n):
+
+        # 가능한 곱셉 결과 중에서 가장 작은 수 선택.
+        ugly[i] = min(next2, next3, next5)
+
+        # 인덱스에 따라 곱셉 결과 증가
+        if ugly[i] == next2:
+            i2 += 1
+            next2 = ugly[i2] * 2
+        if ugly[i] == next3:
+            i3 += 1
+            next3 = ugly[i3] * 3
+        if ugly[i] == next5:
+            i5 += 1
+            next5 = ugly[i5] * 5
+
+    print(ugly[n - 1])
+
+
 if __name__ == "__main__":
     # gold_mime()
     # triangle()
-    resignation()
+    # resignation()
+    # soldier()
+    ugly_number()
