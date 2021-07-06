@@ -288,9 +288,58 @@ def ugly_number():
     print(ugly[n - 1])
 
 
+'''
+# 편집거리 문제
+ - 문자열 A, B가 주어졌을 때, 문자열 A를 편집하여 문자열 B를 만들고자 함
+ - 삽입(Insert) : 특정한 위치에 하나의 문자를 삽입
+ - 삭제(Remove) : 특정한 위치에 하나의 문자를 삭제
+ - 교체(Replace): 특정한 위치에 하나의 문자를 다른 문자로 교체
+ - 문자 A를 B로 만드는 최소 편집 거리를 구하시오.
+# Developer`s Kick!
+ - 두 문자가 같은 경우 : dp[i][j] = dp[i-1][j-1] 
+ - 두 문자가 다른 경우 : dp[i][j] = 1 + min(dp[i][j-1], dp[i-1][j], dp[i-1][j-1])
+ - 행과 열에 해당하는 문자가 서로 같다면, 왼쪽 위에 해당하는 수를 그대로 삽입
+ - 행과 열에 해당하는 문자가 서로 다르다면, 왼쪽(삽입), 위쪽(삭제), 왼쪽 위(교체)
+ - 결국 매트릭스 맨 끝 최소 편집거리를 구하는 것.
+
+"cat", "cut"
+"sunday", "saturday"
+ 
+'''
+
+
+def edit_distance(str1, str2):
+    # 최소 편집 거리(Edit Distance) 계산을 위한 다이나믹 프로그래밍
+    n = len(str1)
+    m = len(str2)
+
+    # 다이나믹 프로그래밍을 위한 2차원 DP 테이블 초기화
+    dp = [[0] * (m + 1) for _ in range(n + 1)]
+
+    # DP 테이블 초기설정
+    for i in range(1, n + 1):
+        dp[i][0] = i
+    for j in range(1, m + 1):
+        dp[0][j] = j
+
+    # 최소 편집 거리 계산
+    for i in range(1, n + 1):
+        for j in range(1, m + 1):
+            # 문자가 같다면, 왼쪽 위에서 해당하는 수를 그대로 삽입
+            if str1[i - 1] == str2[j - 1]:
+                dp[i][j] = dp[i - 1][j - 1]
+            # 삽입(왼쪽), 삭제(위쪽), 교체(왼쪽 위) 중에서 최소 비용을 찾아 대입
+            else:
+                dp[i][j] = 1 + min(dp[i][j - 1], dp[i - 1][j], dp[i - 1][j - 1])
+
+    return dp[n][m]
+
+
 if __name__ == "__main__":
     # gold_mime()
     # triangle()
     # resignation()
     # soldier()
-    ugly_number()
+    # ugly_number()
+    # print(edit_distance('cat', 'cut'))
+    print(edit_distance("sunday", "saturday"))
