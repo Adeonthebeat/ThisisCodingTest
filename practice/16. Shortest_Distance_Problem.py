@@ -54,17 +54,18 @@ OutPut01
 7 4 10 6 0
 
 '''
+
+
 def floyd():
-    
     # 무한
     INF = 1e9
-    
+
     # 노드의 개수와 간선의 개수를 입력받기
     n = int(input())
     m = int(input())
 
     # 2차원 리스트(그래프)를 만들고 모든 값을 무한으로 초기화
-    graph = [[INF] * (n+1) for _ in range(n+1)]
+    graph = [[INF] * (n + 1) for _ in range(n + 1)]
 
     # 자기 자신에서 자신으로 가는 비용은 0으로 초기화
     for a in range(1, n + 1):
@@ -83,13 +84,13 @@ def floyd():
             graph[a][b] = c
 
     # 점화식에 따라 플로이드 워셜 알고리즘 수행
-    for i in range(1, n+1):
-        for a in range(1, n+1):
-            for b in range(1, n+1):
+    for i in range(1, n + 1):
+        for a in range(1, n + 1):
+            for b in range(1, n + 1):
                 graph[a][b] = min(graph[a][b], graph[a][i] + graph[i][b])
 
     # 결과물 출력
-    for a in range(1, n+1):
+    for a in range(1, n + 1):
         for b in range(1, n + 1):
             if graph[a][b] == INF:
                 print(0, end=" ")
@@ -98,10 +99,70 @@ def floyd():
         print()
 
 
+'''
+# 정확한 순위 문제
+ - 학생의 성적을 비교한 결과가 주어질 때, 성적 순위를 정확히 알 수 있는 학생은 모두 몇 명인지 계산하시오
+ - N(학생의 수) / M(두 학생의 성적을 비교 횟수)
+ - M번째 줄부터 두 학생의 성적을 비교한 결과를 나타냄 ex) A < B
+# Developer`s Kick!
+ - 최단경로를 계산하는 문제 = 최단 거리 알고리즘
+ - A번 학생과 B번 학생의 성적을 비교할 때, '경로'를 이용하여 성적 비교 결과를 알 수 있음
+ - A -> B로 도달이 가능하다는 것은 A가 B보다 성적이 낮음
+ - A -> B || B -> A => '성적 비교' 가능
+
+Input01
+6 6
+1 5
+3 4
+4 2
+4 6
+5 2
+5 4
+
+Output01 
+1
+
+'''
 
 
+def rank():
+    INF = 1e9
 
+    # 노드의 개수, 간선의 개수 입력받기
+    n, m = map(int, input().split())
+
+    # 그래프를 만들고 무한으로 초기화
+    graph = [[INF] * (n + 1) for _ in range(n + 1)]
+
+    # 자기 자신에서 자기 자신으로 가는 비용은 0으로 초기화
+    for a in range(n + 1):
+        for b in range(n + 1):
+            if a == b:
+                graph[a][b] = 0
+
+    # 각 간선의 정보를 입력받아 그 값으로 초기화
+    for _ in range(m):
+        a, b = map(int, input().split())
+        graph[a][b] = 1
+
+    # 점화식에 따라 플로이드 워셜 알고리즘 수행
+    for k in range(1, n + 1):
+        for a in range(1, n + 1):
+            for b in range(1, n + 1):
+                graph[a][b] = min(graph[a][b], graph[a][k] + graph[k][b])
+
+    ret = 0
+    # 각 학생을 번호에 따라 한 명씩 확이하며 도달 가능한지 체크
+    for i in range(1, n + 1):
+        cnt = 0
+        for j in range(1, n + 1):
+            if graph[i][j] != INF or graph[j][i] != INF:
+                cnt += 1
+        if cnt == n:
+            ret += 1
+    print(ret)
 
 
 if __name__ == "__main__":
-    floyd()
+    # floyd()
+    rank()
