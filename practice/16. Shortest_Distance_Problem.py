@@ -201,8 +201,9 @@ Output01
 36
 
 '''
-def mars():
 
+
+def mars():
     input = sys.stdin.readline
 
     # 무한 값
@@ -255,7 +256,8 @@ def mars():
                     distance[nx][ny] = cost
                     heapq.heappush(q, (cost, nx, ny))
 
-        print(distance[n-1][n-1])
+        print(distance[n - 1][n - 1])
+
 
 '''
 # 숨바꼭질 문제
@@ -281,8 +283,8 @@ Output01
 
 '''
 
-def hideAndSeek():
 
+def hideAndSeek():
     input = sys.stdin.readline
 
     # 무한을 의미하는 값
@@ -353,11 +355,6 @@ def hideAndSeek():
             ret.append(i)
 
     print(max_node, max_distance, len(ret))
-
-
-
-
-
 
 
 if __name__ == "__main__":
