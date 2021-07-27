@@ -228,8 +228,90 @@ def dark_road():
 
     print(tot - ret)
 
+'''
+# 행성 터널 문제
+ - 행성은 3차원의 좌표 한점
+ - 두 행성 A(x, y, z), B(x, y, z)을 연결하는 터널을 만드는 비용 min(|xa - xb|,|ya - yb|,|za - zb|)
+ - 터널은 N-1개를 건설해서 모든 행성을 연결하는 최소비용을 구하시오. 
+# Developer`s Kick!
+ - '터널은 N-1개를 건설' = 최소신장트리
+ - 터널 비용 min(|xa - xb|,|ya - yb|,|za - zb|)이 주어졌을 때, 
+   x만 고려하자면, (11, -15, -15), (14, -5, -15), (-1, -1, -5), (10, -4, -1), (19, -4, 19)
+   x는 -1, 10, 11, 14, 19 => 11, 1, 3, 5
+   즉, y, z축을 무시하고 x축에 대해서는 4개의 간선만 사용해서 최소신장트리를 만들 수 있음
+   결과적으로 x, y, z축에 대해여 정렬이후에 각각 N-1개의 간선만 고려해도 답이 나옴 
+   문제풀이를 위한 총 간선 개수는 3 X (N-1)이며, 이를 이용해 크루스칼 알고리즘을 수행하면 제한시간에 해결가능  
+ 
+Input01
+5
+11 -15 -15
+14 -5 -15
+-1 -1 -5
+10 -4 -1
+19 -4 19
+
+Output01 
+4
+
+'''
+
+def turnel():
+
+    # 노드의 개수 입력 받기
+    n = int(input())
+
+    # 부모 테이블 초기화
+    parent = [0] * (n + 1)
+
+    # 모든 간선을 담을 리스트와 최종 비용 변수
+    edges = []
+    ret = 0
+
+    # 부모 테이블에서 부모를 자기 자신으로 초기화
+    for i in range(1, n+1):
+        parent[i] = i
+
+    x = []
+    y = []
+    z = []
+
+    # 모든 노드에 관한 좌표 값 입력 받기
+    for i in range(1, n + 1):
+        data = list(map(int, input().split()))
+        x.append((data[0], i))
+        y.append((data[1], i))
+        z.append((data[2], i))
+
+    x.sort()
+    y.sort()
+    z.sort()
+
+    # 인접한 노드로부터 간선정보를 추출하여 처리
+    for i in range(n - 1):
+        # 비용 순으로 정렬하기 위해서 첫 번째 원소를 비용으로 설정
+        edges.append((x[i+1][0] - x[i][0], x[i][1], x[i+1][1]))
+        edges.append((y[i+1][0] - y[i][0], y[i][1], y[i+1][1]))
+        edges.append((z[i+1][0] - z[i][0], z[i][1], z[i+1][1]))
+
+    # 간선을 비용 순으로 정렬
+    edges.sort()
+
+    # 간선을 하나씩 확인
+    for edge in edges:
+        cost, a, b = edge
+
+        # 사이클이 발생하지 않는 경우에만, 집합 포함
+        if find_parent(parent, a) != find_parent(parent, b):
+            union_parent(parent, a, b)
+            ret += cost
+
+    print(ret)
+
+
+
 
 if __name__ == "__main__":
     # travel_plan()
     # docking()
-    dark_road()
+    # dark_road()
+    turnel()
