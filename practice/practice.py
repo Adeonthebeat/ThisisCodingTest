@@ -6,6 +6,7 @@ import textwrap
 
 ###########################################################
 # 자동 코드 정렬 ctrl +alt + i
+from scipy.stats import ansari
 
 '''
 6 11
@@ -233,16 +234,17 @@ def text_compreesed(s):
             # 다른 문자열이 나왔다면(더 이상 압축하지 못하는 경우라면)
             else:
                 compressed += str(count) + prev if count >= 2 else prev
-                prev = s[j:j + step] # 상태 초기화
+                prev = s[j:j + step]  # 상태 초기화
                 count = 1
         compressed += str(count) + prev if count >= 2 else prev
         answer = min(answer, len(compressed))
 
     return answer
 
+
 def rotate(key):
-    n = len(key)    # 행
-    m = len(key[0]) # 열
+    n = len(key)  # 행
+    m = len(key[0])  # 열
 
     rotate_key = [[0] * n for _ in range(m)]
 
@@ -251,6 +253,7 @@ def rotate(key):
             rotate_key[j][n - i - 1] = key[i][j]
     return rotate_key
 
+
 def check(new_lock):
     lock_length = len(new_lock) // 3
     for i in range(lock_length, lock_length * 2):
@@ -258,6 +261,7 @@ def check(new_lock):
             if new_lock[i][j] != 1:
                 return False
     return True
+
 
 def lock_key(key, lock):
     n = len(lock)
@@ -292,6 +296,7 @@ def lock_key(key, lock):
                     for j in range(m):
                         new_lock[x + i][y + j] -= rotated_key[i][j]
     return False
+
 
 '''
 'Dummy' 라는 도스게임이 있다. 이 게임에는 뱀이 나와서 기어다니는데, 사과를 먹으면 뱀 길이가 늘어난다. 뱀이 이리저리 기어다니다가 벽 또는 자기자신의 몸과 부딪히면 게임이 끝난다.
@@ -351,10 +356,10 @@ def lock_key(key, lock):
 13
 '''
 
-def dummy_game():
 
-    n = int(input())    # 보드의 크기
-    k = int(input())    # 사과의 개수
+def dummy_game():
+    n = int(input())  # 보드의 크기
+    k = int(input())  # 사과의 개수
 
     # 맵 정보
     data = [[0] * (n + 1) for _ in range(n + 1)]
@@ -385,12 +390,12 @@ def dummy_game():
         return direction
 
     def simulate():
-        x, y = 1, 1     # 뱀의 머리 위치
+        x, y = 1, 1  # 뱀의 머리 위치
         data[x][y] = 2  # 뱀이 존재하는 위치는 2
-        direction = 0   # 처음에는 동쪽을 보고 있음
-        time = 0        # 시작한 뒤에 지난 '초' 시간
-        index = 0       # 다음에 회전할 정보
-        q = [(x, y)]    # 뱀이 차지하고 있는 위치정보(꼬리가 앞쪽)
+        direction = 0  # 처음에는 동쪽을 보고 있음
+        time = 0  # 시작한 뒤에 지난 '초' 시간
+        index = 0  # 다음에 회전할 정보
+        q = [(x, y)]  # 뱀이 차지하고 있는 위치정보(꼬리가 앞쪽)
 
         while True:
             nx = x + dx[direction]
@@ -421,7 +426,36 @@ def dummy_game():
                 direction = turn(direction, info[index][1])
                 index += 1
         return time
+
     print(simulate())
+
+
+def solution(answers):
+    answer = []
+
+    a1 = [1, 2, 3, 4, 5]
+    a2 = [2, 1, 2, 3, 2, 4, 2, 5]
+    a3 = [3, 3, 1, 1, 2, 2, 4, 4, 5, 5]
+
+    c1, c2, c3 = 0, 0, 0
+    # [1, 3, 2, 4, 2]
+    for i in range(len(answers)):
+        if answers[i] == a1[i % len(a1)]:
+            c1 += 1
+        if answers[i] == a2[i % len(a2)]:
+            c2 += 1
+        if answers[i] == a3[i % len(a3)]:
+            c3 += 1
+
+    tmp = [c1, c2, c3]
+
+    for num, score in enumerate(tmp):
+        print(num, score, max(tmp))
+        if score == max(tmp):
+            answer.append(num + 1)
+
+    return answer
+
 
 if __name__ == "__main__":
     # Dijkstras()
@@ -430,4 +464,5 @@ if __name__ == "__main__":
     # lucky_straight()
     # text_realign()
     # print(text_compreesed("ababcdcdababcdcd"))
-    dummy_game()
+    # dummy_game()
+    print(solution(	[1, 3, 2, 4, 2]))
