@@ -53,6 +53,16 @@ def solution(strings, n):
 
 '''
 # 모의고사 문제
+수포자는 수학을 포기한 사람의 준말입니다. 수포자 삼인방은 모의고사에 수학 문제를 전부 찍으려 합니다. 
+수포자는 1번 문제부터 마지막 문제까지 다음과 같이 찍습니다.
+
+1번 수포자가 찍는 방식: 1, 2, 3, 4, 5, 1, 2, 3, 4, 5, ...
+2번 수포자가 찍는 방식: 2, 1, 2, 3, 2, 4, 2, 5, 2, 1, 2, 3, 2, 4, 2, 5, ...
+3번 수포자가 찍는 방식: 3, 3, 1, 1, 2, 2, 4, 4, 5, 5, 3, 3, 1, 1, 2, 2, 4, 4, 5, 5, ...
+
+1번 문제부터 마지막 문제까지의 정답이 순서대로 들은 배열 answers가 주어졌을 때, 
+가장 많은 문제를 맞힌 사람이 누구인지 배열에 담아 return 하도록 solution 함수를 작성해주세요.
+
 answers	    |   return
 [1,2,3,4,5]	|   [1]
 [1,3,2,4,2]	|   [1,2,3]
@@ -76,11 +86,11 @@ def pre_test(answers):
         if answers[i] == a3[i % len(a3)]:
             c3 += 1
 
-    tmp = [c1, c2, c3]
+    temp = [c1, c2, c3]
 
-    for num, score in enumerate(tmp):
-        if score == max(tmp):
-            answer.append(num + 1)
+    for number, scores in enumerate(temp):
+        if scores == max(temp):
+            answer.append(number + 1)
 
     return answer
 
@@ -154,11 +164,12 @@ def getMax(n):
 def sosu(nums):
     cnt = 0
     for i in range(0, len(nums) - 2):
-        for j in range(i+1, len(nums) - 1):
-            for k in range(j+1, len(nums)):
+        for j in range(i + 1, len(nums) - 1):
+            for k in range(j + 1, len(nums)):
                 if isPrimeNums(nums[i], nums[j], nums[k]):
                     cnt += 1
     return cnt
+
 
 def prime(nums):
     cnt = 0
@@ -171,6 +182,8 @@ def prime(nums):
 '''
 # 소수 판별
 '''
+
+
 def isPrimeNums(a, b, c):
     tot = a + b + c
     for i in range(2, tot):
@@ -179,13 +192,65 @@ def isPrimeNums(a, b, c):
     return True
 
 
+'''
+배열 array의 i번째 숫자부터 j번째 숫자까지 자르고 정렬했을 때, k번째에 있는 수를 구하려 합니다.
+예를 들어 array가 [1, 5, 2, 6, 3, 7, 4], i = 2, j = 5, k = 3이라면
+array의 2번째부터 5번째까지 자르면 [5, 2, 6, 3]입니다.
+1에서 나온 배열을 정렬하면 [2, 3, 5, 6]입니다.
+2에서 나온 배열의 3번째 숫자는 5입니다.
+배열 array, [i, j, k]를 원소로 가진 2차원 배열 commands가 매개변수로 주어질 때, 
+commands의 모든 원소에 대해 앞서 설명한 연산을 적용했을 때 
+나온 결과를 배열에 담아 return 하도록 solution 함수를 작성해주세요.
+'''
+
+
+def k_number(array, commands):
+    for i in range(len(commands)):
+        temp = array[commands[i][0] - 1:commands[i][1]]
+
+        temp.sort()
+
+        answer = temp[commands[i][2] - 1]
+
+    return answer
+
+
+'''
+점심시간에 도둑이 들어, 일부 학생이 체육복을 도난당했습니다. 다행히 여벌 체육복이 있는 학생이 이들에게 체육복을 빌려주려 합니다. 
+학생들의 번호는 체격 순으로 매겨져 있어, 바로 앞번호의 학생이나 바로 뒷번호의 학생에게만 체육복을 빌려줄 수 있습니다. 
+예를 들어, 4번 학생은 3번 학생이나 5번 학생에게만 체육복을 빌려줄 수 있습니다. 체육복이 없으면 수업을 들을 수 없기 때문에 
+체육복을 적절히 빌려 최대한 많은 학생이 체육수업을 들어야 합니다.
+
+전체 학생의 수 n, 체육복을 도난당한 학생들의 번호가 담긴 배열 lost, 
+여벌의 체육복을 가져온 학생들의 번호가 담긴 배열 reserve가 매개변수로 주어질 때, 
+체육수업을 들을 수 있는 학생의 최댓값을 return 하도록 solution 함수를 작성해주세요.
+'''
+
+
+def gym_suit(n, lost, reserve):
+    set_lost = set(lost) - set(reserve)
+    set_reserve = set(reserve) - set(lost)
+
+    for i in set_reserve:
+        if i - 1 in set_lost:
+            set_lost.remove(i - 1)
+        elif i + 1 in set_lost:
+            set_lost.remove(i + 1)
+
+    return n - len(set_lost)
+
 
 if __name__ == "__main__":
     # print(solution(2, 5))
     # print(solution(["abce", "abcd", "cdx"], 2))
-    # pre_test([1,2,3,4,5])
+    # print(pre_test([1, 2, 3, 4, 5]))
+    print(pre_test([1, 3, 2, 4, 2]))
     # print(getMax(4))
     # snail(4)
     # print(sosu([1,2,3,4]))
     # print(prime([1,2,3,4]))
-    print(prime([1, 2, 7, 6, 4]))
+    # print(prime([1, 2, 7, 6, 4]))
+    # k_number([1, 5, 2, 6, 3, 7, 4], [[2, 5, 3], [4, 4, 1], [1, 7, 3]])
+    # print(gym_suit(5, [2, 4], [1, 3, 5]))
+    # print(gym_suit(5, [2, 4], [3]))
+    # print(gym_suit(3, [3], [1]))
