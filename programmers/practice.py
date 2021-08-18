@@ -240,11 +240,92 @@ def gym_suit(n, lost, reserve):
     return n - len(set_lost)
 
 
+'''
+# 행렬의 덧셈
+행렬의 덧셈은 행과 열의 크기가 같은 두 행렬의 같은 행, 같은 열의 값을 서로 더한 결과가 됩니다. 
+2개의 행렬 arr1과 arr2를 입력받아, 행렬 덧셈의 결과를 반환하는 함수, solution을 완성해주세요.
+arr1	        arr2	        return
+[[1,2],[2,3]]	[[3,4],[5,6]]	[[4,6],[7,9]]
+[[1],[2]]	    [[3],[4]]	    [[4],[6]]
+'''
+
+
+def sum_matrix(arr1, arr2):
+    answer = []
+    # for i in range(len(arr1)):
+    #     arr_sum = []
+    #     for j in range(len(arr2[0])):
+    #         arr_sum.append(arr1[i][j] + arr2[i][j])
+    #     answer.append(arr_sum)
+
+    for i in range(len(arr1)):
+        for j in range(len(arr1[0])):
+            arr1[i][j] += arr2[i][j]
+
+    return arr1
+
+def remove_min(arr):
+
+    if(len(arr) > 1):
+        list = set(arr)
+
+        list.remove(min(list))
+
+        arr.remove(min(arr))
+
+        # print(list)
+        print(arr)
+    else:
+        arr.remove(max(arr))
+        arr.append(-1)
+        print(arr)
+    # return [i for i in arr if i > min(arr)]
+
+def collatz(num):
+    cnt = 0
+    #
+    # while True:
+    #     if cnt == 500:
+    #         break
+    #     if num == 1:
+    #         break
+    #     if num % 2 == 0:
+    #         num = num / 2
+    #         cnt += 1
+    #     else:
+    #         num = (num * 3) + 1
+    #         cnt += 1
+    #
+    # print(cnt if cnt != 500 else -1)
+
+    answer = 0
+
+    if num == 1:
+        return answer
+
+    while True:
+        num = num/2 if num % 2 == 0 else (num * 3) + 1
+        answer += 1
+        if num == 1:
+            return answer
+        elif answer == 500:
+            return -1
+    return answer
+
+    # for i in range(500):
+    #     num = num / 2 if num % 2 == 0 else num*3 + 1
+    #     if num == 1:
+    #         return i + 1
+    # return -1
+
+
+
+
 if __name__ == "__main__":
     # print(solution(2, 5))
     # print(solution(["abce", "abcd", "cdx"], 2))
     # print(pre_test([1, 2, 3, 4, 5]))
-    print(pre_test([1, 3, 2, 4, 2]))
+    # print(pre_test([1, 3, 2, 4, 2]))
     # print(getMax(4))
     # snail(4)
     # print(sosu([1,2,3,4]))
@@ -254,3 +335,6 @@ if __name__ == "__main__":
     # print(gym_suit(5, [2, 4], [1, 3, 5]))
     # print(gym_suit(5, [2, 4], [3]))
     # print(gym_suit(3, [3], [1]))
+    # print(sum_matrix([[1,2],[2,3]], [[3,4],[5,6]]))
+    # remove_min([10])
+    print(collatz(8))
