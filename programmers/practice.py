@@ -1,10 +1,7 @@
 '''
 프로그래머스 1단계 풀이
-- 최대공약수와 최소공배수
-- 문자열 내 마음대로 정렬하기
-- 모의고사(완전탐색)
 '''
-
+import math
 from math import gcd
 import itertools
 
@@ -264,9 +261,9 @@ def sum_matrix(arr1, arr2):
 
     return arr1
 
-def remove_min(arr):
 
-    if(len(arr) > 1):
+def remove_min(arr):
+    if (len(arr) > 1):
         list = set(arr)
 
         list.remove(min(list))
@@ -280,6 +277,7 @@ def remove_min(arr):
         arr.append(-1)
         print(arr)
     # return [i for i in arr if i > min(arr)]
+
 
 def collatz(num):
     cnt = 0
@@ -304,7 +302,7 @@ def collatz(num):
         return answer
 
     while True:
-        num = num/2 if num % 2 == 0 else (num * 3) + 1
+        num = num / 2 if num % 2 == 0 else (num * 3) + 1
         answer += 1
         if num == 1:
             return answer
@@ -319,6 +317,95 @@ def collatz(num):
     # return -1
 
 
+'''
+# 정수 제곱근 판별 문제
+임의의 양의 정수 n에 대해, n이 어떤 양의 정수 x의 제곱인지 아닌지 판단하려 합니다.
+n이 양의 정수 x의 제곱이라면 x+1의 제곱을 리턴하고, n이 양의 정수 x의 제곱이 아니라면 -1을 리턴하는 함수를 완성하세요.
+
+입출력
+n	    return
+121	    144
+3	    -1
+'''
+
+
+def square_root(n):
+    # sqrt_num = int(math.sqrt(n))
+    # answer = int(math.pow(sqrt_num+1, 2))
+
+    # sqrt_num = n ** (1/2)
+    #
+    # if sqrt_num % 1 == 0:
+    #     print(int((sqrt_num + 1) ** 2))
+    # else:
+    #     print(-1)
+
+    print(int(pow(math.sqrt(n) + 1, 2)) if math.sqrt(n) % 1 == 0 else -1)
+
+
+'''
+# 정수 내림차순으로 배치하기 문제
+함수 solution은 정수 n을 매개변수로 입력받습니다. 
+n의 각 자릿수를 큰것부터 작은 순으로 정렬한 새로운 정수를 리턴해주세요. 
+예를 들어 n이 118372면 873211을 리턴하면 됩니다.
+
+n	    return
+118372	873211
+'''
+
+
+def num_desc(n):
+    a = list(sorted(map(int, str(n)), reverse=True))
+
+    print(int("".join(map(str, a))))
+
+
+'''
+# 하샤드 수 문제
+양의 정수 x가 하샤드 수이려면 x의 자릿수의 합으로 x가 나누어져야 합니다. 
+예를 들어 18의 자릿수 합은 1+8=9이고, 18은 9로 나누어 떨어지므로 18은 하샤드 수입니다. 
+자연수 x를 입력받아 x가 하샤드 수인지 아닌지 검사하는 함수, solution을 완성해주세요.
+
+입출력
+arr	    return
+10	    true
+12	    true
+11	    false
+13	    false
+'''
+
+
+def harshad(arr):
+    data = list(map(int, str(arr)))
+
+    print(True if arr % sum(data) == 0 else False)
+
+
+'''
+# 핸드폰 번호 가리기 문제
+프로그래머스 모바일은 개인정보 보호를 위해 고지서를 보낼 때 고객들의 전화번호의 일부를 가립니다.
+전화번호가 문자열 phone_number로 주어졌을 때, 전화번호의 뒷 4자리를 제외한 나머지 숫자를 
+전부 *으로 가린 문자열을 리턴하는 함수, solution을 완성해주세요.
+
+phone_number	return
+"01033334444"	"*******4444"
+"027778888"	    "*****8888"
+'''
+
+
+def phone_number(phone_num):
+    a = list(map(int, str(phone_num)))
+
+    for i in range(len(a) - 4):
+        a[i] = "*"
+    print(str("".join(map(str, a))))
+    # print("*" * (len(s) - 4) + s[-4:])
+
+
+def practice():
+    arr = [1, 2, 3, 4, 5, 6, 6, 7, 78, 8, 9, 9, 90]
+
+    print(arr[-1])
 
 
 if __name__ == "__main__":
@@ -337,4 +424,9 @@ if __name__ == "__main__":
     # print(gym_suit(3, [3], [1]))
     # print(sum_matrix([[1,2],[2,3]], [[3,4],[5,6]]))
     # remove_min([10])
-    print(collatz(8))
+    # print(collatz(8))
+    # square_root(3)
+    # practice()
+    # num_desc(118372)
+    # harshad(11)
+    phone_number("01033334444")
