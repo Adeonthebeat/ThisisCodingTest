@@ -402,10 +402,61 @@ def phone_number(phone_num):
     # print("*" * (len(s) - 4) + s[-4:])
 
 
-def practice():
-    arr = [1, 2, 3, 4, 5, 6, 6, 7, 78, 8, 9, 9, 90]
+'''
+# 자연수 뒤집어 배열로 만들기 문제
+'''
 
-    print(arr[-1])
+
+def reversed_str():
+    n = 12345
+
+    rvs_str = str(n)[::-1]
+    # print(rvs_str)
+
+    data = list(map(int, list(rvs_str)))
+
+    print(data)
+    # return list(map(int, reversed(str(n))))
+'''
+# x만큼 간격이 있는 n개의 숫자 문제
+- 곱셈....
+'''
+def practice():
+
+    x = 2
+    n = 5
+
+    answer = []
+
+    for i in range(1, n+1):
+        answer.append(i*x)
+
+    # print(answer)
+    print([i * x + x for i in range(n)])
+
+'''
+# 직사각형 별찍기 문제
+'''
+def practice2():
+
+    a, b = 5, 3
+
+    print(('*' * a + '\n') * b)
+    # for i in range(1, b+1):
+    #     print("*" * a)
+
+def sum_test():
+    a, b = 3, 3
+    c = 0
+    answer = 0
+    if a != b:
+        c = a
+        answer = a + b + c
+    else:
+        answer = a
+
+    print(answer)
+
 
 
 if __name__ == "__main__":
@@ -426,7 +477,10 @@ if __name__ == "__main__":
     # remove_min([10])
     # print(collatz(8))
     # square_root(3)
-    # practice()
     # num_desc(118372)
     # harshad(11)
-    phone_number("01033334444")
+    # phone_number("01033334444")
+    # reversed_str()
+    # practice()
+    # practice2()
+    sum_test()
