@@ -417,33 +417,39 @@ def reversed_str():
 
     print(data)
     # return list(map(int, reversed(str(n))))
+
+
 '''
 # x만큼 간격이 있는 n개의 숫자 문제
 - 곱셈....
 '''
-def practice():
 
+
+def practice():
     x = 2
     n = 5
 
     answer = []
 
-    for i in range(1, n+1):
-        answer.append(i*x)
+    for i in range(1, n + 1):
+        answer.append(i * x)
 
     # print(answer)
     print([i * x + x for i in range(n)])
 
+
 '''
 # 직사각형 별찍기 문제
 '''
-def practice2():
 
+
+def practice2():
     a, b = 5, 3
 
     print(('*' * a + '\n') * b)
     # for i in range(1, b+1):
     #     print("*" * a)
+
 
 def sum_test():
     a, b = 3, 3
@@ -457,6 +463,69 @@ def sum_test():
 
     print(answer)
 
+
+'''
+# 문자열을 정수로 바꾸기
+'''
+
+
+def text_to_num():
+    n = "-1234"
+    print(int(n))
+    # sum = ""
+    # for i in n:
+    #     sum += i
+    # print(int(sum))
+
+
+'''
+# 문자열 내림차순으로 배치하기
+'''
+
+
+def desc_text():
+    s = "Zbcdefg"
+    re_str = str(s)[::-1]
+
+    # print(''.join(sorted(s)[::-1]))
+    print("".join(reversed(sorted(s))))
+
+
+'''
+# 두 정수 사이의 합
+range 함수 : 연속된 숫자(정수)를 만들어주는 함수
+'''
+
+
+def num_sum():
+    a, b = 5, 3
+    print(sum(range(min(a, b), max(a, b) + 1)))
+
+
+'''
+# 에라토스 테네스의 체 방식
+# 소수판별법 
+'''
+
+
+def eratones(n):
+    # nums = [True] * (n + 1)
+    #
+    # for i in range(2, len(nums)//2 + 1):
+    #     if nums[i]:
+    #         for j in range(i+i, n+1, i):
+    #             nums[j] = False
+    # # print(len([i for i in range(2, n + 1) if nums[i]]))
+    # print(len([i for i in range(2, n+1) if nums[i]]))
+
+    # 미친 코드
+    num = set(range(2, n + 1))
+
+    for i in range(2, n + 1):
+        if i in num:
+            num -= set(range(2 * i, n + 1, i))
+            print(num)
+    # print(len(num))
 
 
 if __name__ == "__main__":
@@ -483,4 +552,8 @@ if __name__ == "__main__":
     # reversed_str()
     # practice()
     # practice2()
-    sum_test()
+    # sum_test()
+    # text_to_num()
+    # desc_text()
+    # num_sum()
+    eratones(10)
