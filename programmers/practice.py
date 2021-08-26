@@ -355,10 +355,10 @@ n	    return
 
 
 def num_desc(n):
-    a = list(sorted(map(int, str(n)), reverse=True))
 
-    print(int("".join(map(str, a))))
+    data = sorted(list(map(int, str(n))), reverse=True)
 
+    print("".join(map(str, data)))
 
 '''
 # 하샤드 수 문제
@@ -376,6 +376,7 @@ arr	    return
 
 
 def harshad(arr):
+
     data = list(map(int, str(arr)))
 
     print(True if arr % sum(data) == 0 else False)
@@ -394,12 +395,19 @@ phone_number	return
 
 
 def phone_number(phone_num):
-    a = list(map(int, str(phone_num)))
 
-    for i in range(len(a) - 4):
-        a[i] = "*"
-    print(str("".join(map(str, a))))
-    # print("*" * (len(s) - 4) + s[-4:])
+    # data = list(map(int, str(phone_num)))
+
+    # for i in range(len(phone_num)-4):
+    #     data[i] = "*"
+    #
+    # print("".join(map(str, data)))
+
+    print(str("*" * (len(phone_num) - 4)) + str(phone_num[-4:]))
+
+
+
+
 
 
 '''
@@ -411,12 +419,14 @@ def reversed_str():
     n = 12345
 
     rvs_str = str(n)[::-1]
-    # print(rvs_str)
 
     data = list(map(int, list(rvs_str)))
 
     print(data)
-    # return list(map(int, reversed(str(n))))
+
+    print(list(map(int, reversed(str(n)))))
+
+
 
 
 '''
@@ -434,7 +444,7 @@ def practice():
     for i in range(1, n + 1):
         answer.append(i * x)
 
-    # print(answer)
+    print(answer)
     print([i * x + x for i in range(n)])
 
 
@@ -509,23 +519,23 @@ def num_sum():
 
 
 def eratones(n):
-    # nums = [True] * (n + 1)
-    #
-    # for i in range(2, len(nums)//2 + 1):
-    #     if nums[i]:
-    #         for j in range(i+i, n+1, i):
-    #             nums[j] = False
-    # # print(len([i for i in range(2, n + 1) if nums[i]]))
-    # print(len([i for i in range(2, n+1) if nums[i]]))
+    nums = [True] * (n + 1)
 
-    # 미친 코드
-    num = set(range(2, n + 1))
+    for i in range(2, len(nums)//2 + 1):
+        if nums[i]:
+            for j in range(i+i, n+1, i):
+                nums[j] = False
+    # print(len([i for i in range(2, n + 1) if nums[i]]))
+    print(len([i for i in range(2, n+1) if nums[i]]))
 
-    for i in range(2, n + 1):
+def eratonesTwo(n):
+    num = set(range(2, n+1))
+
+    for i in range(2, n+1):
         if i in num:
-            num -= set(range(2 * i, n + 1, i))
-            print(num)
-    # print(len(num))
+            num -= set(range(2*i, n+1, i))
+    print(len(num))
+
 
 '''
 # 약수의 합
@@ -541,6 +551,38 @@ def yaksu(n):
             sum += i
 
     print(sum)
+
+'''
+# 약수의 개수와 덧셈
+두 정수 left와 right가 매개변수로 주어집니다. 
+left부터 right까지의 모든 수들 중에서, 약수의 개수가 짝수인 수는 더하고, 
+약수의 개수가 홀수인 수는 뺀 수를 return 하도록 solution 함수를 완성해주세요.
+
+left	right	result
+13	    17	    43
+24	    27	    52
+
+'''
+def yaksu_cnt_plus():
+
+    left = 13
+    right =17
+
+
+    sum = 0
+    for k in range(left, right + 1):
+        cnt = 0
+        for i in range(1, k+1):
+            if k % i == 0:
+                cnt += 1
+        if cnt % 2 == 0:
+            sum += k
+        else:
+            sum -= k
+
+    print(sum)
+    # print(sum)
+    # print(13 + 14 + 15 - 16 + 17 )
 
 
 
@@ -565,7 +607,7 @@ if __name__ == "__main__":
     # print(collatz(8))
     # square_root(3)
     # num_desc(118372)
-    # harshad(11)
+    # harshad(10)
     # phone_number("01033334444")
     # reversed_str()
     # practice()
@@ -575,4 +617,6 @@ if __name__ == "__main__":
     # desc_text()
     # num_sum()
     # eratones(10)
-    yaksu(12)
+    # eratonesTwo(10)
+    # yaksu(12)
+    yaksu_cnt_plus()
