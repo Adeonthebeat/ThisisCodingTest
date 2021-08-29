@@ -2,6 +2,7 @@
 프로그래머스 1단계 풀이
 '''
 import math
+import re
 from math import gcd
 import itertools
 
@@ -355,10 +356,10 @@ n	    return
 
 
 def num_desc(n):
-
     data = sorted(list(map(int, str(n))), reverse=True)
 
     print("".join(map(str, data)))
+
 
 '''
 # 하샤드 수 문제
@@ -376,7 +377,6 @@ arr	    return
 
 
 def harshad(arr):
-
     data = list(map(int, str(arr)))
 
     print(True if arr % sum(data) == 0 else False)
@@ -395,7 +395,6 @@ phone_number	return
 
 
 def phone_number(phone_num):
-
     # data = list(map(int, str(phone_num)))
 
     # for i in range(len(phone_num)-4):
@@ -404,10 +403,6 @@ def phone_number(phone_num):
     # print("".join(map(str, data)))
 
     print(str("*" * (len(phone_num) - 4)) + str(phone_num[-4:]))
-
-
-
-
 
 
 '''
@@ -425,8 +420,6 @@ def reversed_str():
     print(data)
 
     print(list(map(int, reversed(str(n)))))
-
-
 
 
 '''
@@ -521,19 +514,20 @@ def num_sum():
 def eratones(n):
     nums = [True] * (n + 1)
 
-    for i in range(2, len(nums)//2 + 1):
+    for i in range(2, len(nums) // 2 + 1):
         if nums[i]:
-            for j in range(i+i, n+1, i):
+            for j in range(i + i, n + 1, i):
                 nums[j] = False
     # print(len([i for i in range(2, n + 1) if nums[i]]))
-    print(len([i for i in range(2, n+1) if nums[i]]))
+    print(len([i for i in range(2, n + 1) if nums[i]]))
+
 
 def eratonesTwo(n):
-    num = set(range(2, n+1))
+    num = set(range(2, n + 1))
 
-    for i in range(2, n+1):
+    for i in range(2, n + 1):
         if i in num:
-            num -= set(range(2*i, n+1, i))
+            num -= set(range(2 * i, n + 1, i))
     print(len(num))
 
 
@@ -543,14 +537,16 @@ n	return
 12	28
 5	6
 '''
-def yaksu(n):
 
+
+def yaksu(n):
     sum = 0
-    for i in range(1, n+1):
+    for i in range(1, n + 1):
         if n % i == 0:
             sum += i
 
     print(sum)
+
 
 '''
 # 약수의 개수와 덧셈
@@ -563,16 +559,16 @@ left	right	result
 24	    27	    52
 
 '''
+
+
 def yaksu_cnt_plus():
-
     left = 13
-    right =17
-
+    right = 17
 
     sum = 0
     for k in range(left, right + 1):
         cnt = 0
-        for i in range(1, k+1):
+        for i in range(1, k + 1):
             if k % i == 0:
                 cnt += 1
         if cnt % 2 == 0:
@@ -585,7 +581,57 @@ def yaksu_cnt_plus():
     # print(13 + 14 + 15 - 16 + 17 )
 
 
+'''
+# 나누어 떨어지는 숫자 배열
+'''
 
+
+def divisor():
+    arr = [5, 9, 7, 10]
+    div = 5
+
+    # answer = []
+    #
+    # for i in arr:
+    #     if i % div == 0:
+    #         answer.append(i)
+    # if len(answer) == 0:
+    #     answer.append(-1)
+    #
+    # print(sorted(answer))
+    print(sorted([n for n in arr if n % div == 0]) or [-1])
+
+
+'''
+# 자릿수 더하기 문제
+'''
+
+
+def number_of_sum():
+    n = 123
+
+    arr = list(map(int, str(n)))
+
+    return sum([i for i in arr])
+
+'''
+# 문자열 다루기 기본
+'''
+def isTrue():
+    s = "a234"
+    answer = False
+
+    re_s = re.sub('[0-9]', '', s)
+
+    if re_s == '':
+        if len(s) in range(4, 6):
+            answer = True
+        else:
+            answer = False
+'''
+# 이상한 문자 만들기
+'''
+def weird_text():
 
 
 if __name__ == "__main__":
@@ -619,4 +665,6 @@ if __name__ == "__main__":
     # eratones(10)
     # eratonesTwo(10)
     # yaksu(12)
-    yaksu_cnt_plus()
+    # yaksu_cnt_plus()
+    # divisor()
+    number_of_sum()
