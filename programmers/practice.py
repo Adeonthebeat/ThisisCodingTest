@@ -632,7 +632,7 @@ def isTrue():
 # 이상한 문자 만들기
 '''
 def weird_text():
-
+    print()
 
 if __name__ == "__main__":
     # print(solution(2, 5))
