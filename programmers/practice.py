@@ -614,9 +614,12 @@ def number_of_sum():
 
     return sum([i for i in arr])
 
+
 '''
 # 문자열 다루기 기본
 '''
+
+
 def isTrue():
     s = "a234"
     answer = False
@@ -628,11 +631,73 @@ def isTrue():
             answer = True
         else:
             answer = False
+
+
 '''
 # 이상한 문자 만들기
+문자열 s는 한 개 이상의 단어로 구성되어 있습니다. 각 단어는 하나 이상의 공백문자로 구분되어 있습니다. 
+각 단어의 짝수번째 알파벳은 대문자로, 홀수번째 알파벳은 소문자로 바꾼 문자열을 리턴하는 함수, solution을 완성하세요.
+- 제한 사항
+문자열 전체의 짝/홀수 인덱스가 아니라, 단어(공백을 기준)별로 짝/홀수 인덱스를 판단해야합니다.
+
 '''
+
+
 def weird_text():
-    print()
+    s = "try hello world"
+    words_list = s.split()
+    new_list = []
+
+    for word in words_list:
+        new_word = ""
+        for i in range(len(word)):
+            # new_word += word[i].upper() if i % 2 == 0 else word[i].lower()
+            if i % 2 == 0:
+                new_word += word[i].upper()
+            elif i % 2 == 1:
+                new_word += word[i].lower()
+
+        new_list.append(new_word)
+    print(" ".join(new_list))
+    print(" ".join(["".join([w.upper() if i%2==0 else w.lower() for i, w in enumerate(word)]) for word in s.split()]))
+
+
+
+
+
+'''
+# 같은 수는 싫어 문제
+- 같은 연속적인 수는 제거하는 문제
+->> 같은 수가 아니라면, 다른 리스트에 넣으면 됨
+'''
+
+
+def sequetial_num_rm():
+    answer = []
+    arrList = [1, 1, 3, 3, 0, 1, 1]
+    answer.append(arrList[0])
+    for i in range(1, len(arrList)):
+        if arrList[i] != arrList[i - 1]:
+            answer.append(arrList[i])
+    print(answer)
+
+
+'''
+# 같은 수는 싫어 문제
+- 맨끝에 수 != 주어진 리스트의 수라면, insert.
+- 미친 코드!
+'''
+
+
+def sequetial_num_rm2():
+    answer = []
+    s = [1, 1, 3, 3, 0, 1, 1]
+
+    for i in s:
+        if answer[-1:] == [i]: continue
+        answer.append(i)
+    print(answer)
+
 
 if __name__ == "__main__":
     # print(solution(2, 5))
@@ -667,4 +732,7 @@ if __name__ == "__main__":
     # yaksu(12)
     # yaksu_cnt_plus()
     # divisor()
-    number_of_sum()
+    # number_of_sum()
+    weird_text()
+    # sequetial_num_rm()
+    # sequetial_num_rm2()
