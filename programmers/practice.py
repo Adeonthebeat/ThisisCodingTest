@@ -654,12 +654,12 @@ def weird_text():
             # new_word += word[i].upper() if i % 2 == 0 else word[i].lower()
             if i % 2 == 0:
                 new_word += word[i].upper()
-            elif i % 2 == 1:
+            else:
                 new_word += word[i].lower()
 
         new_list.append(new_word)
     print(" ".join(new_list))
-    print(" ".join(["".join([w.upper() if i%2==0 else w.lower() for i, w in enumerate(word)]) for word in s.split()]))
+    print(" ".join(["".join([w.upper() if i % 2 == 0 else w.lower() for i, w in enumerate(word)]) for word in s.split()]))
 
 
 
