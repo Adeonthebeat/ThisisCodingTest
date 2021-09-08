@@ -698,6 +698,79 @@ def sequetial_num_rm2():
         answer.append(i)
     print(answer)
 
+'''
+# 문자열 내 p와 y의 개수
+- p와 y의 개수가 같다면, true
+- p와 y의 개수가 다르다면, false 
+'''
+def find_str():
+    s = "pPoooyY"
+
+    return s.lower().count('p') == s.lower().count('y')
+
+    # ss = s.lower()
+
+    # cnt_p = 0
+    # cnt_y = 0
+    # for i in ss:
+    #     if i == 'p':
+    #         cnt_p += 1
+    #     if i == 'y':
+    #         cnt_y += 1
+    #
+    # if cnt_p == cnt_y:
+    #     return True
+    # else:
+    #     return False
+
+'''
+# 수박수박수박수박수박수?
+- n = 3이면   -> 수박수
+- n = 4면    ->  수박수박
+'''
+def subak():
+    answer = ""
+    n = 3
+
+    print(('수박' * n)[:n])
+
+'''
+# 시저 암호
+- 어떤 문장의 각 알파벳을 일정한 거리만큼 밀어서 다른 알파벳으로 바꾸는 암호화 방식을 시저 암호
+예를 들어 "AB"는 1만큼 밀면 "BC"가 되고, 3만큼 밀면 "DE"가 됩니다. "z"는 1만큼 밀면 "a"가 됩니다. 
+문자열 s와 거리 n을 입력받아 s를 n만큼 민 암호문을 만드는 함수, solution을 완성해 보세요.
+'''
+def caesar_cipher(s, n):
+    s = list(s)
+
+    for i in range(len(s)):
+        if s[i].isupper():
+            s[i] = chr((ord(s[i]) - ord('A') + n) % 26 + ord('A'))
+        elif s[i].islower():
+            s[i] = chr((ord(s[i]) - ord('a') + n) % 26 + ord('a'))
+
+    print("".join(s))
+
+'''
+# 서울에서 김서방 찾기
+String형 배열 seoul의 element중 "Kim"의 위치 x를 찾아, "김서방은 x에 있다"는 String을 반환하는 함수, solution을 완성하세요. 
+seoul에 "Kim"은 오직 한 번만 나타나며 잘못된 값이 입력되는 경우는 없습니다.
+예)
+seoul	            return
+["Jane", "Kim"]	    "김서방은 1에 있다"
+'''
+
+def find_kim(seoul):
+    # answer = ''
+    #
+    # for i in range(len(seoul)):
+    #     if seoul[i] == "Kim":
+    #         answer = '김서방은 ' + str(i) + '에 있다'
+    #
+    #
+    # return answer
+    print( "김서방은 {}에 있다".format(seoul.index("Kim")))
+
 
 if __name__ == "__main__":
     # print(solution(2, 5))
@@ -733,6 +806,10 @@ if __name__ == "__main__":
     # yaksu_cnt_plus()
     # divisor()
     # number_of_sum()
-    weird_text()
+    # weird_text()
     # sequetial_num_rm()
     # sequetial_num_rm2()
+    # find_str()
+    # subak()
+    # caesar_cipher("a B z", 4)
+    find_kim(["Jane", "Kim"])
