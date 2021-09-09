@@ -3,6 +3,7 @@
 '''
 import math
 import re
+from datetime import datetime
 from math import gcd
 import itertools
 
@@ -811,6 +812,13 @@ def what_days2(a, b):
     month = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
 
     print(date[(sum(month[:a-1]) + b - 1) % 7])
+
+    # date = 'MON TUE WED THU FRI SAT SUN'.split()
+    #
+    # return date[datetime.datetime(2016, a, b).weekday()]
+
+
+
 
 if __name__ == "__main__":
     # print(solution(2, 5))
