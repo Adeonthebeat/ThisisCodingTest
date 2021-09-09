@@ -772,6 +772,46 @@ def find_kim(seoul):
     print( "김서방은 {}에 있다".format(seoul.index("Kim")))
 
 
+'''
+# 두 개 뽑아서 더하기
+정수 배열 numbers가 주어집니다. numbers에서 서로 다른 인덱스에 있는 두 개의 수를 뽑아 더해서 만들 수 있는 모든 수를 배열에 
+오름차순으로 담아 return 하도록 solution 함수를 완성해주세요.
+'''
+
+def two_sum(n):
+
+    # [2,1,3,4,1]
+    answer = set()
+
+    for i in list(itertools.combinations(n, 2)):
+        answer.add(sum(i))
+
+    print(sorted(answer))
+
+'''
+# 2016년 문제 
+2016년 1월 1일은 금요일입니다. 2016년 a월 b일은 무슨 요일일까요? 두 수 a ,b를 입력받아 2016년 a월 b일이 무슨 요일인지 리턴하는 함수, solution을 완성하세요. 
+요일의 이름은 일요일부터 토요일까지 각각 SUN,MON,TUE,WED,THU,FRI,SAT입니다. 
+예를 들어 a=5, b=24라면 5월 24일은 화요일이므로 문자열 "TUE"를 반환하세요.
+- 2016/01/01 - FRI 
+'''
+
+def what_days(a, b):
+    date = ['FRI', 'SAT', 'SUN', 'MON', 'TUE', 'WED', 'THU']
+    month = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+
+    diff = b-1
+    for i in range(a-1):
+        diff += month[i]
+
+    print(date[diff%7])
+
+def what_days2(a, b):
+    date = ['FRI', 'SAT', 'SUN', 'MON', 'TUE', 'WED', 'THU']
+    month = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+
+    print(date[(sum(month[:a-1]) + b - 1) % 7])
+
 if __name__ == "__main__":
     # print(solution(2, 5))
     # print(solution(["abce", "abcd", "cdx"], 2))
@@ -812,4 +852,7 @@ if __name__ == "__main__":
     # find_str()
     # subak()
     # caesar_cipher("a B z", 4)
-    find_kim(["Jane", "Kim"])
+    # find_kim(["Jane", "Kim"])
+    # two_sum([2,1,3,4,1])
+    # what_days(5, 24)
+    what_days2(5, 24)
