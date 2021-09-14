@@ -817,8 +817,18 @@ def what_days2(a, b):
     #
     # return date[datetime.datetime(2016, a, b).weekday()]
 
+'''
+# 가운데 글자 가져오기
+단어 s의 가운데 글자를 반환하는 함수, solution을 만들어 보세요. 단어의 길이가 짝수라면 가운데 두글자를 반환하면 됩니다.
+'''
+def mid_text(s):
+    answer = ''
 
-
+    if len(s) % 2 == 1:
+        answer = s[len(s) % 2]
+    else:
+        answer = s[(len(s)//2 - 1):(len(s)//2 + 1)]
+    print(answer)
 
 if __name__ == "__main__":
     # print(solution(2, 5))
@@ -863,4 +873,5 @@ if __name__ == "__main__":
     # find_kim(["Jane", "Kim"])
     # two_sum([2,1,3,4,1])
     # what_days(5, 24)
-    what_days2(5, 24)
+    # what_days2(5, 24)
+    mid_text("abcde")
