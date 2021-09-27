@@ -830,6 +830,54 @@ def mid_text(s):
         answer = s[(len(s)//2 - 1):(len(s)//2 + 1)]
     print(answer)
 
+'''
+S사에서는 각 부서에 필요한 물품을 지원해 주기 위해 부서별로 물품을 구매하는데 필요한 금액을 조사했습니다. 
+그러나, 전체 예산이 정해져 있기 때문에 모든 부서의 물품을 구매해 줄 수는 없습니다. 그래서 최대한 많은 부서의 물품을 구매해 줄 수 있도록 하려고 합니다.
+물품을 구매해 줄 때는 각 부서가 신청한 금액만큼을 모두 지원해 줘야 합니다. 
+예를 들어 1,000원을 신청한 부서에는 정확히 1,000원을 지원해야 하며, 1,000원보다 적은 금액을 지원해 줄 수는 없습니다.
+부서별로 신청한 금액이 들어있는 배열 d와 예산 budget이 매개변수로 주어질 때, 최대 몇 개의 부서에 물품을 지원할 수 있는지 return 하도록 solution 함수를 완성해주세요.
+'''
+def budget(d, budget):
+    answer = 0
+
+    d.sort()
+
+    for i in range(len(d)):
+        if sum(d[:i+1]) <= budget:
+            answer += 1
+
+    print(answer)
+
+# def solution(d, budget):
+#     d.sort()
+#     while budget < sum(d):
+#         d.pop()
+#     return len(d)
+
+'''
+네오와 프로도가 숫자놀이를 하고 있습니다. 네오가 프로도에게 숫자를 건넬 때 일부 자릿수를 영단어로 바꾼 카드를 건네주면 프로도는 원래 숫자를 찾는 게임입니다.
+
+다음은 숫자의 일부 자릿수를 영단어로 바꾸는 예시입니다.
+
+1478 → "one4seveneight"
+234567 → "23four5six7"
+10203 → "1zerotwozero3"
+이렇게 숫자의 일부 자릿수가 영단어로 바뀌어졌거나, 혹은 바뀌지 않고 그대로인 문자열 s가 매개변수로 주어집니다. 
+s가 의미하는 원래 숫자를 return 하도록 solution 함수를 완성해주세요.
+'''
+def replace_text(s):
+
+    answer = s
+
+    num_text = {'zero': '0', 'one': '1', 'two': '2', 'three': '3', 'four': '4',
+                'five': '5', 'six': '6', 'seven':'7', 'eight': '8', 'nine': '9'}
+
+    for key, value in num_text.items():
+        answer = answer.replace(key, value)
+
+    print(int(answer))
+
+
 if __name__ == "__main__":
     # print(solution(2, 5))
     # print(solution(["abce", "abcd", "cdx"], 2))
@@ -874,4 +922,7 @@ if __name__ == "__main__":
     # two_sum([2,1,3,4,1])
     # what_days(5, 24)
     # what_days2(5, 24)
-    mid_text("abcde")
+    # mid_text("abcde")
+    # budget([1,3,2,5,4],	9)
+    # budget([2,2,3,3], 10)
+    replace_text("one4seveneight")
