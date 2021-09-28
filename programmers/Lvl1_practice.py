@@ -831,6 +831,7 @@ def mid_text(s):
     print(answer)
 
 '''
+# 예산문제
 S사에서는 각 부서에 필요한 물품을 지원해 주기 위해 부서별로 물품을 구매하는데 필요한 금액을 조사했습니다. 
 그러나, 전체 예산이 정해져 있기 때문에 모든 부서의 물품을 구매해 줄 수는 없습니다. 그래서 최대한 많은 부서의 물품을 구매해 줄 수 있도록 하려고 합니다.
 물품을 구매해 줄 때는 각 부서가 신청한 금액만큼을 모두 지원해 줘야 합니다. 
@@ -855,10 +856,9 @@ def budget(d, budget):
 #     return len(d)
 
 '''
+# 숫자 문자열과 영단어
 네오와 프로도가 숫자놀이를 하고 있습니다. 네오가 프로도에게 숫자를 건넬 때 일부 자릿수를 영단어로 바꾼 카드를 건네주면 프로도는 원래 숫자를 찾는 게임입니다.
-
 다음은 숫자의 일부 자릿수를 영단어로 바꾸는 예시입니다.
-
 1478 → "one4seveneight"
 234567 → "23four5six7"
 10203 → "1zerotwozero3"
@@ -877,6 +877,74 @@ def replace_text(s):
 
     print(int(answer))
 
+'''
+# 로또의 최고 순위와 최저 순위 - 최대 등수와 최소 등수를 계산
+로또를 구매한 민우는 당첨 번호 발표일을 학수고대하고 있었습니다. 
+하지만, 민우의 동생이 로또에 낙서를 하여, 일부 번호를 알아볼 수 없게 되었습니다. 
+당첨 번호 발표 후, 민우는 자신이 구매했던 로또로 당첨이 가능했던 최고 순위와 최저 순위를 알아보고 싶어 졌습니다.
+알아볼 수 없는 번호를 0으로 표기하기로 하고, 민우가 구매한 로또 번호 6개가 44, 1, 0, 0, 31 25라고 가정해보겠습니다. 
+
+순위	    당첨 내용
+1	    6개 번호가 모두 일치
+2	    5개 번호가 일치
+3	    4개 번호가 일치
+4	    3개 번호가 일치
+5	    2개 번호가 일치
+6(낙첨)	그 외
+
+민우가 구매한 로또 번호를 담은 배열 lottos, 당첨 번호를 담은 배열 win_nums가 매개변수로 주어집니다. 
+이때, 당첨 가능한 최고 순위와 최저 순위를 차례대로 배열에 담아서 return 하도록 solution 함수를 완성해주세요.
+
+lottos	                win_nums	                result
+[44, 1, 0, 0, 31, 25]	[31, 10, 45, 1, 6, 19]	    [3, 5]
+[0, 0, 0, 0, 0, 0]	    [38, 19, 20, 40, 15, 25]	[1, 6]
+[45, 4, 35, 20, 3, 9]	[20, 9, 3, 45, 4, 35]	    [1, 1]
+'''
+def lotto(lottos, win_nums):
+
+    answer = 0
+
+    rank = [6,6,5,4,3,2,1]
+    cnt_0 = lottos.count(0)
+
+    for i in lottos:
+        if i in win_nums:
+            answer += 1
+
+    print(rank[cnt_0 + answer], rank[answer])
+
+def make_new_id(new_id):
+    # 1단계
+    new_id = new_id.lower()
+
+    # 2단계
+    answer = ''
+    for word in new_id:
+        if word.isalnum() or word in '-_.':
+            answer += word
+
+    # 3단계
+    while '..' in answer:
+        answer = answer.replace('..', '.')
+
+    # 4단계
+    answer = answer[1:] if answer[0] == '.' and len(answer) > 1 else answer
+    answer = answer[:-1] if answer[-1] == '.' else answer
+
+    # 5단계
+    answer = 'a' if answer == '' else answer
+
+    # 6단계
+    if len(answer) >= 16:
+        answer = answer[:15]
+        answer = answer[:-1] if answer[-1] == '.' else answer
+
+    # 7단계
+    if len(answer) <= 3:
+        answer = answer + answer[-1] * (3-len(answer))
+
+
+    return answer
 
 if __name__ == "__main__":
     # print(solution(2, 5))
@@ -925,4 +993,8 @@ if __name__ == "__main__":
     # mid_text("abcde")
     # budget([1,3,2,5,4],	9)
     # budget([2,2,3,3], 10)
-    replace_text("one4seveneight")
+    # replace_text("one4seveneight")
+    # lotto([44, 1, 0, 0, 31, 25], [31, 10, 45, 1, 6, 19])
+    # lotto([0, 0, 0, 0, 0, 0], [38, 19, 20, 40, 15, 25])
+    # lotto([45, 4, 35, 20, 3, 9], [20, 9, 3, 45, 4, 35])
+    make_new_id("...!@BaT#*..y.abcdefghijklm"	)
