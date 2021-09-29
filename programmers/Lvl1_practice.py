@@ -946,6 +946,65 @@ def make_new_id(new_id):
 
     return answer
 
+'''
+# 없는 숫자 더하기
+0부터 9까지의 숫자 중 일부가 들어있는 배열 numbers가 매개변수로 주어집니다. 
+numbers에서 찾을 수 없는 0부터 9까지의 숫자를 모두 찾아 더한 수를 return 하도록 solution 함수를 완성해주세요.
+'''
+def plus_empty(numbers):
+    answer = 45
+
+    # for i in numbers:
+    #     answer -= i
+    print(answer - sum(numbers))
+    return answer - sum(numbers)
+
+'''
+# 음양 더하기
+어떤 정수들이 있습니다. 이 정수들의 절댓값을 차례대로 담은 정수 배열 absolutes와 이 정수들의 부호를 차례대로 담은 불리언 배열 signs가 매개변수로 주어집니다. 
+실제 정수들의 합을 구하여 return 하도록 solution 함수를 완성해주세요.
+'''
+def plus_minus(absolutes, signs):
+    answer = []
+    for i in range(len(signs)):
+        answer.append(absolutes[i] * -1) if signs[i] == False else answer.append(absolutes[i] * 1)
+
+    print(sum(answer))
+    return sum(answer)
+    # 좋은 답변
+    # print(sum(absolutes if sign else -absolutes for absolutes, sign in zip(absolutes, signs)))
+
+'''
+# 부족한 금액 계산하기
+새로 생긴 놀이기구는 인기가 매우 많아 줄이 끊이질 않습니다. 이 놀이기구의 원래 이용료는 price원 인데, 
+놀이기구를 N 번 째 이용한다면 원래 이용료의 N배를 받기로 하였습니다. 즉, 처음 이용료가 100이었다면 2번째에는 200, 3번째에는 300으로 요금이 인상됩니다.
+놀이기구를 count번 타게 되면 현재 자신이 가지고 있는 금액에서 얼마가 모자라는지를 return 하도록 solution 함수를 완성하세요.
+단, 금액이 부족하지 않으면 0을 return 하세요.
+
+놀이기구의 이용료       price : 1 ≤ price ≤ 2,500, price는 자연수
+처음 가지고 있던 금액   money : 1 ≤ money ≤ 1,000,000,000, money는 자연수
+놀이기구의 이용 횟수    count : 1 ≤ count ≤ 2,500, count는 자연수
+입출력 예
+price	money	count	result
+3	    20	    4	    10
+
+입출력 예 #1
+이용금액이 3인 놀이기구를 4번 타고 싶은 고객이 현재 가진 금액이 20이라면, 
+총 필요한 놀이기구의 이용 금액은 30 (= 3+6+9+12) 이 되어 10만큼 부족하므로 10을 return 합니다.
+'''
+def play_garden(price, money, count):
+    answer = -1
+
+    sum = 0
+    for i in range(1, count + 1):
+        sum += price * i
+
+    answer = sum - money if sum > money else 0
+
+    # print(answer)
+    # return max(0, price * (count + 1) * count // 2 - money)
+
+
 if __name__ == "__main__":
     # print(solution(2, 5))
     # print(solution(["abce", "abcd", "cdx"], 2))
@@ -997,4 +1056,7 @@ if __name__ == "__main__":
     # lotto([44, 1, 0, 0, 31, 25], [31, 10, 45, 1, 6, 19])
     # lotto([0, 0, 0, 0, 0, 0], [38, 19, 20, 40, 15, 25])
     # lotto([45, 4, 35, 20, 3, 9], [20, 9, 3, 45, 4, 35])
-    make_new_id("...!@BaT#*..y.abcdefghijklm"	)
+    # make_new_id("...!@BaT#*..y.abcdefghijklm")
+    # plus_empty([1,2,3,4,6,7,8,0])
+    # plus_minus([4,7,12], [True, False, True])
+    play_garden(3, 20, 4)
