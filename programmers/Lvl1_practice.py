@@ -660,10 +660,8 @@ def weird_text():
 
         new_list.append(new_word)
     print(" ".join(new_list))
-    print(" ".join(["".join([w.upper() if i % 2 == 0 else w.lower() for i, w in enumerate(word)]) for word in s.split()]))
-
-
-
+    print(
+        " ".join(["".join([w.upper() if i % 2 == 0 else w.lower() for i, w in enumerate(word)]) for word in s.split()]))
 
 
 '''
@@ -699,11 +697,14 @@ def sequetial_num_rm2():
         answer.append(i)
     print(answer)
 
+
 '''
 # 문자열 내 p와 y의 개수
 - p와 y의 개수가 같다면, true
 - p와 y의 개수가 다르다면, false 
 '''
+
+
 def find_str():
     s = "pPoooyY"
 
@@ -724,16 +725,20 @@ def find_str():
     # else:
     #     return False
 
+
 '''
 # 수박수박수박수박수박수?
 - n = 3이면   -> 수박수
 - n = 4면    ->  수박수박
 '''
+
+
 def subak():
     answer = ""
     n = 3
 
     print(('수박' * n)[:n])
+
 
 '''
 # 시저 암호
@@ -741,6 +746,8 @@ def subak():
 예를 들어 "AB"는 1만큼 밀면 "BC"가 되고, 3만큼 밀면 "DE"가 됩니다. "z"는 1만큼 밀면 "a"가 됩니다. 
 문자열 s와 거리 n을 입력받아 s를 n만큼 민 암호문을 만드는 함수, solution을 완성해 보세요.
 '''
+
+
 def caesar_cipher(s, n):
     s = list(s)
 
@@ -752,6 +759,7 @@ def caesar_cipher(s, n):
 
     print("".join(s))
 
+
 '''
 # 서울에서 김서방 찾기
 String형 배열 seoul의 element중 "Kim"의 위치 x를 찾아, "김서방은 x에 있다"는 String을 반환하는 함수, solution을 완성하세요. 
@@ -760,6 +768,7 @@ seoul에 "Kim"은 오직 한 번만 나타나며 잘못된 값이 입력되는 �
 seoul	            return
 ["Jane", "Kim"]	    "김서방은 1에 있다"
 '''
+
 
 def find_kim(seoul):
     # answer = ''
@@ -770,7 +779,7 @@ def find_kim(seoul):
     #
     #
     # return answer
-    print( "김서방은 {}에 있다".format(seoul.index("Kim")))
+    print("김서방은 {}에 있다".format(seoul.index("Kim")))
 
 
 '''
@@ -779,8 +788,8 @@ def find_kim(seoul):
 오름차순으로 담아 return 하도록 solution 함수를 완성해주세요.
 '''
 
-def two_sum(n):
 
+def two_sum(n):
     # [2,1,3,4,1]
     answer = set()
 
@@ -788,6 +797,7 @@ def two_sum(n):
         answer.add(sum(i))
 
     print(sorted(answer))
+
 
 '''
 # 2016년 문제 
@@ -797,38 +807,44 @@ def two_sum(n):
 - 2016/01/01 - FRI 
 '''
 
+
 def what_days(a, b):
     date = ['FRI', 'SAT', 'SUN', 'MON', 'TUE', 'WED', 'THU']
     month = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
 
-    diff = b-1
-    for i in range(a-1):
+    diff = b - 1
+    for i in range(a - 1):
         diff += month[i]
 
-    print(date[diff%7])
+    print(date[diff % 7])
+
 
 def what_days2(a, b):
     date = ['FRI', 'SAT', 'SUN', 'MON', 'TUE', 'WED', 'THU']
     month = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
 
-    print(date[(sum(month[:a-1]) + b - 1) % 7])
+    print(date[(sum(month[:a - 1]) + b - 1) % 7])
 
     # date = 'MON TUE WED THU FRI SAT SUN'.split()
     #
     # return date[datetime.datetime(2016, a, b).weekday()]
 
+
 '''
 # 가운데 글자 가져오기
 단어 s의 가운데 글자를 반환하는 함수, solution을 만들어 보세요. 단어의 길이가 짝수라면 가운데 두글자를 반환하면 됩니다.
 '''
+
+
 def mid_text(s):
     answer = ''
 
     if len(s) % 2 == 1:
         answer = s[len(s) % 2]
     else:
-        answer = s[(len(s)//2 - 1):(len(s)//2 + 1)]
+        answer = s[(len(s) // 2 - 1):(len(s) // 2 + 1)]
     print(answer)
+
 
 '''
 # 예산문제
@@ -838,16 +854,19 @@ S사에서는 각 부서에 필요한 물품을 지원해 주기 위해 부서�
 예를 들어 1,000원을 신청한 부서에는 정확히 1,000원을 지원해야 하며, 1,000원보다 적은 금액을 지원해 줄 수는 없습니다.
 부서별로 신청한 금액이 들어있는 배열 d와 예산 budget이 매개변수로 주어질 때, 최대 몇 개의 부서에 물품을 지원할 수 있는지 return 하도록 solution 함수를 완성해주세요.
 '''
+
+
 def budget(d, budget):
     answer = 0
 
     d.sort()
 
     for i in range(len(d)):
-        if sum(d[:i+1]) <= budget:
+        if sum(d[:i + 1]) <= budget:
             answer += 1
 
     print(answer)
+
 
 # def solution(d, budget):
 #     d.sort()
@@ -865,17 +884,19 @@ def budget(d, budget):
 이렇게 숫자의 일부 자릿수가 영단어로 바뀌어졌거나, 혹은 바뀌지 않고 그대로인 문자열 s가 매개변수로 주어집니다. 
 s가 의미하는 원래 숫자를 return 하도록 solution 함수를 완성해주세요.
 '''
-def replace_text(s):
 
+
+def replace_text(s):
     answer = s
 
     num_text = {'zero': '0', 'one': '1', 'two': '2', 'three': '3', 'four': '4',
-                'five': '5', 'six': '6', 'seven':'7', 'eight': '8', 'nine': '9'}
+                'five': '5', 'six': '6', 'seven': '7', 'eight': '8', 'nine': '9'}
 
     for key, value in num_text.items():
         answer = answer.replace(key, value)
 
     print(int(answer))
+
 
 '''
 # 로또의 최고 순위와 최저 순위 - 최대 등수와 최소 등수를 계산
@@ -900,11 +921,12 @@ lottos	                win_nums	                result
 [0, 0, 0, 0, 0, 0]	    [38, 19, 20, 40, 15, 25]	[1, 6]
 [45, 4, 35, 20, 3, 9]	[20, 9, 3, 45, 4, 35]	    [1, 1]
 '''
-def lotto(lottos, win_nums):
 
+
+def lotto(lottos, win_nums):
     answer = 0
 
-    rank = [6,6,5,4,3,2,1]
+    rank = [6, 6, 5, 4, 3, 2, 1]
     cnt_0 = lottos.count(0)
 
     for i in lottos:
@@ -912,6 +934,7 @@ def lotto(lottos, win_nums):
             answer += 1
 
     print(rank[cnt_0 + answer], rank[answer])
+
 
 def make_new_id(new_id):
     # 1단계
@@ -941,16 +964,18 @@ def make_new_id(new_id):
 
     # 7단계
     if len(answer) <= 3:
-        answer = answer + answer[-1] * (3-len(answer))
-
+        answer = answer + answer[-1] * (3 - len(answer))
 
     return answer
+
 
 '''
 # 없는 숫자 더하기
 0부터 9까지의 숫자 중 일부가 들어있는 배열 numbers가 매개변수로 주어집니다. 
 numbers에서 찾을 수 없는 0부터 9까지의 숫자를 모두 찾아 더한 수를 return 하도록 solution 함수를 완성해주세요.
 '''
+
+
 def plus_empty(numbers):
     answer = 45
 
@@ -959,11 +984,14 @@ def plus_empty(numbers):
     print(answer - sum(numbers))
     return answer - sum(numbers)
 
+
 '''
 # 음양 더하기
 어떤 정수들이 있습니다. 이 정수들의 절댓값을 차례대로 담은 정수 배열 absolutes와 이 정수들의 부호를 차례대로 담은 불리언 배열 signs가 매개변수로 주어집니다. 
 실제 정수들의 합을 구하여 return 하도록 solution 함수를 완성해주세요.
 '''
+
+
 def plus_minus(absolutes, signs):
     answer = []
     for i in range(len(signs)):
@@ -973,6 +1001,7 @@ def plus_minus(absolutes, signs):
     return sum(answer)
     # 좋은 답변
     # print(sum(absolutes if sign else -absolutes for absolutes, sign in zip(absolutes, signs)))
+
 
 '''
 # 부족한 금액 계산하기
@@ -992,6 +1021,8 @@ price	money	count	result
 이용금액이 3인 놀이기구를 4번 타고 싶은 고객이 현재 가진 금액이 20이라면, 
 총 필요한 놀이기구의 이용 금액은 30 (= 3+6+9+12) 이 되어 10만큼 부족하므로 10을 return 합니다.
 '''
+
+
 def play_garden(price, money, count):
     answer = -1
 
@@ -1003,6 +1034,49 @@ def play_garden(price, money, count):
 
     # print(answer)
     # return max(0, price * (count + 1) * count // 2 - money)
+
+
+'''
+# 최소직사각형
+문제 설명
+명함 지갑을 만드는 회사에서 지갑의 크기를 정하려고 합니다. 다양한 모양과 크기의 명함들을 모두 수납할 수 있으면서, 
+작아서 들고 다니기 편한 지갑을 만들어야 합니다. 이러한 요건을 만족하는 지갑을 만들기 위해 디자인팀은 모든 명함의 가로 길이와 세로 길이를 조사했습니다.
+
+아래 표는 4가지 명함의 가로 길이와 세로 길이를 나타냅니다.
+
+명함 번호	가로 길이	세로 길이
+1	        60	        50
+2	        30	        70
+3	        60	        30
+4	        80	        40
+가장 긴 가로 길이와 세로 길이가 각각 80, 70이기 때문에 80(가로) x 70(세로) 크기의 지갑을 만들면 모든 명함들을 수납할 수 있습니다. 
+하지만 2번 명함을 가로로 눕혀 수납한다면 80(가로) x 50(세로) 크기의 지갑으로 모든 명함들을 수납할 수 있습니다. 이때의 지갑 크기는 4000(=80 x 50)입니다.
+
+모든 명함의 가로 길이와 세로 길이를 나타내는 2차원 배열 sizes가 매개변수로 주어집니다. 모든 명함을 수납할 수 있는 가장 작은 지갑을 만들 때,
+ 지갑의 크기를 return 하도록 solution 함수를 완성해주세요.
+'''
+
+
+def wallet(sizes):
+
+    # [[60, 50], [30, 70], [60, 30], [80, 40]]
+    big = []
+    small = []
+    for i in sizes:
+        if i[0] > i[1]:
+            big.append(i[0])
+            small.append(i[1])
+        else:
+            big.append(i[1])
+            small.append(i[0])
+
+    # print(max(big) * max(small))
+
+    print(
+
+        max(max(i) for i in sizes) * max(min(i) for i in sizes)
+
+    )
 
 
 if __name__ == "__main__":
@@ -1059,4 +1133,5 @@ if __name__ == "__main__":
     # make_new_id("...!@BaT#*..y.abcdefghijklm")
     # plus_empty([1,2,3,4,6,7,8,0])
     # plus_minus([4,7,12], [True, False, True])
-    play_garden(3, 20, 4)
+    # play_garden(3, 20, 4)
+    wallet([[60, 50], [30, 70], [60, 30], [80, 40]])
