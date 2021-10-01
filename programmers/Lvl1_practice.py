@@ -1058,7 +1058,6 @@ def play_garden(price, money, count):
 
 
 def wallet(sizes):
-
     # [[60, 50], [30, 70], [60, 30], [80, 40]]
     big = []
     small = []
@@ -1072,11 +1071,48 @@ def wallet(sizes):
 
     # print(max(big) * max(small))
 
-    print(
+    print(max(max(i) for i in sizes) * max(min(i) for i in sizes))
 
-        max(max(i) for i in sizes) * max(min(i) for i in sizes)
 
-    )
+'''
+# 직업군 추천하기
+문제 설명
+개발자가 사용하는 언어와 언어 선호도를 입력하면 그에 맞는 직업군을 추천해주는 알고리즘을 개발하려고 합니다.
+아래 표는 5개 직업군 별로 많이 사용하는 5개 언어에 직업군 언어 점수를 부여한 표입니다.
+직업군 언어 점수를 정리한 문자열 배열 table, 개발자가 사용하는 언어를 담은 문자열 배열 languages, 언어 선호도를 담은 정수 배열 preference가 매개변수로 주어집니다. 
+개발자가 사용하는 언어의 언어 선호도 x 직업군 언어 점수의 총합이 가장 높은 직업군을 return 하도록 solution 함수를 완성해주세요. 
+총합이 같은 직업군이 여러 개일 경우, 이름이 사전 순으로 가장 빠른 직업군을 return 해주세요.
+'''
+
+
+def match_job(table, languages, preference):
+    programmer_score = {}
+
+    for lang, score in zip(languages, preference):
+        programmer_score[lang] = score
+
+    # print(programmer_score)
+
+    scores = []
+
+    for record in table:
+        split_score = record.split()
+
+        sum_scores = 0
+        for lang in languages:
+            if lang in split_score:
+                score = 6 - split_score.index(lang)
+                sum_scores += score * programmer_score[lang]
+                # print(lang, score, programmer_score[lang], sum_scores)
+        scores.append(sum_scores)
+    answer = []
+
+    for index, score in enumerate(scores):
+        if score == max(scores):
+            # print(table[index].split()[0])
+            answer.append(table[index].split()[0])
+    answer.sort()
+    print(answer[0])
 
 
 if __name__ == "__main__":
@@ -1134,4 +1170,10 @@ if __name__ == "__main__":
     # plus_empty([1,2,3,4,6,7,8,0])
     # plus_minus([4,7,12], [True, False, True])
     # play_garden(3, 20, 4)
-    wallet([[60, 50], [30, 70], [60, 30], [80, 40]])
+    # wallet([[60, 50], [30, 70], [60, 30], [80, 40]])
+    # match_job(["SI JAVA JAVASCRIPT SQL PYTHON C#", "CONTENTS JAVASCRIPT JAVA PYTHON SQL C++",
+    #            "HARDWARE C C++ PYTHON JAVA JAVASCRIPT", "PORTAL JAVA JAVASCRIPT PYTHON KOTLIN PHP",
+    #            "GAME C++ C# JAVASCRIPT C JAVA"], ["PYTHON", "C++", "SQL"], [7, 5, 5])
+    match_job(["SI JAVA JAVASCRIPT SQL PYTHON C#", "CONTENTS JAVASCRIPT JAVA PYTHON SQL C++",
+     "HARDWARE C C++ PYTHON JAVA JAVASCRIPT", "PORTAL JAVA JAVASCRIPT PYTHON KOTLIN PHP",
+     "GAME C++ C# JAVASCRIPT C JAVA"],["JAVA", "JAVASCRIPT"],[7, 5])
