@@ -1170,14 +1170,36 @@ a	        b	            result
 [-1,0,1]	[1,0,-1]	    -2
 '''
 
+'''
+# 내적 문제
+'''
+
 
 def inner_product(a, b):
-
     # sum = 0
     # for i in range(len(a)):
     #     sum += a[i] * b[i]
 
     print(sum(a[i] * b[i] for i in range(len(a))))
+
+
+'''
+# 3진법 뒤집기 문제
+자연수 n이 매개변수로 주어집니다. n을 3진법 상에서 앞뒤로 뒤집은 후, 
+이를 다시 10진법으로 표현한 수를 return 하도록 solution 함수를 완성해주세요.
+'''
+
+
+def ternary(n):
+    answer = ''
+    while n > 0:
+        # rest = n % 3
+        # n = n//3
+        # answer += str(rest)
+        n, re = divmod(n, 3)
+        answer += str(re)
+
+    print(int(answer, 3))
 
 
 if __name__ == "__main__":
@@ -1244,4 +1266,5 @@ if __name__ == "__main__":
     #  "GAME C++ C# JAVASCRIPT C JAVA"],["JAVA", "JAVASCRIPT"],[7, 5])
     # catch_monster([3,1,2,3])
     # catch_monster([3,3,3,2,2,4])
-    inner_product([1, 2, 3, 4], [-3, -1, 0, 2])
+    # inner_product([1, 2, 3, 4], [-3, -1, 0, 2])
+    ternary(45)
