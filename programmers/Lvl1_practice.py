@@ -1,6 +1,7 @@
 '''
 # 프로그래머스 1단계 풀이
 '''
+import collections
 import math
 import re
 from datetime import datetime
@@ -1202,6 +1203,43 @@ def ternary(n):
     print(int(answer, 3))
 
 
+'''
+# 완주하지 못한 선수
+수많은 마라톤 선수들이 마라톤에 참여하였습니다. 단 한 명의 선수를 제외하고는 모든 선수가 마라톤을 완주하였습니다.
+마라톤에 참여한 선수들의 이름이 담긴 배열 participant와 완주한 선수들의 이름이 담긴 배열 completion이 주어질 때, 
+완주하지 못한 선수의 이름을 return 하도록 solution 함수를 작성해주세요.
+participant	                                        completion	                                return
+["leo", "kiki", "eden"]	                            ["eden", "kiki"]	                        "leo"
+["marina", "josipa", "nikola", "vinko", "filipa"]	["josipa", "filipa", "marina", "nikola"]	"vinko"
+["mislav", "stanko", "mislav", "ana"]	            ["stanko", "ana", "mislav"]	                "mislav"
+'''
+
+
+def marathoner(participant, completion):
+    answer = ''
+
+    participant.sort()
+    completion.sort()
+
+    for p, c in zip(participant, completion):
+        if p != c:
+            return p
+    return participant.pop()
+
+
+'''
+여기서는 Counter 객체 끼리 뺄셈이 가능하다는 점을 이용했다. Counter(participant)는 participant의 각 요소들과 그 개수를 짝지어서 가지고 있기 때문에, 
+Counter(completion)을 빼 주게 되면 겹치는 요소들의 개수를 빼서 결과적으로 answer에는 단 하나의 이름(key)과 1(value)만 남게 된다. 
+따라서 answer.keys()를 list로 만들어 주면 0번째 인덱스가 완주하지 못한 선수의 이름이다.
+'''
+
+
+def marathoner2(participant, completion):
+    answer = collections.Counter(participant) - collections.Counter(completion)
+
+    return list(answer.keys())[0]
+
+
 if __name__ == "__main__":
     # print(solution(2, 5))
     # print(solution(["abce", "abcd", "cdx"], 2))
@@ -1267,4 +1305,6 @@ if __name__ == "__main__":
     # catch_monster([3,1,2,3])
     # catch_monster([3,3,3,2,2,4])
     # inner_product([1, 2, 3, 4], [-3, -1, 0, 2])
-    ternary(45)
+    # ternary(45)
+    # print(marathoner(["mislav", "stanko", "mislav", "ana"], ["stanko", "ana", "mislav"]))
+    print(marathoner2(["mislav", "stanko", "mislav", "ana"], ["stanko", "ana", "mislav"]))
