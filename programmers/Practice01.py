@@ -34,6 +34,21 @@ def solution(n, m):
 
     print([a, b])
 
+def average(arr):
+    avg = sum(arr) / len(arr)
+
+    return avg
+
+def matrix_sum(arr1, arr2):
+
+    for i in range(len(arr1)):
+        for j in range(len(arr1[0])):
+            arr1[i][j] += arr2[i][j]
+
+    print(arr1)
+
 if __name__ == "__main__":
     # wallet([[60, 50], [30, 70], [60, 30], [80, 40]])
-    solution(3, 12)
+    # solution(3, 12)
+    # print(average([1,2,3,4]))
+    matrix_sum([[1],[2]], [[3],[4]])
