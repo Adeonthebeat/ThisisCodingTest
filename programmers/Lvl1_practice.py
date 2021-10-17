@@ -1328,7 +1328,7 @@ def dart(dartResult):
 
         elif val == '*':
             if len(scores) > 1:
-                print('ddd',scores[-2])
+                print('ddd', scores[-2])
                 scores[-2] *= 2
 
             scores[-1] *= 2
@@ -1337,6 +1337,139 @@ def dart(dartResult):
             scores[-1] *= -1
         print(scores)
     # print(sum(scores))
+
+
+'''
+# [카카오 인턴] 키패드 누르기
+'''
+
+
+def cal_dist(num, now_l, now_r, pos, handed):
+    X, Y = 0, 1
+    dist_l = abs(pos[now_l][X] - pos[num][X]) + abs(pos[now_l][Y] - pos[num][Y])
+    dist_r = abs(pos[now_r][X] - pos[num][X]) + abs(pos[now_r][Y] - pos[num][Y])
+
+    # 거리가 같으면.
+    if dist_l == dist_r:
+        return 'R' if handed == 'right' else 'L'
+    return 'R' if dist_l > dist_r else 'L'
+
+
+def keypad(numbers, hand):
+    # [1, 3, 4, 5, 8, 2, 1, 4, 5, 9, 5] "right" "LRLLLRLLRRL"
+
+    # 왼손잡이/오른손잡이
+    HANDED = hand
+
+    # 번호 좌표화
+    position = {
+        1: (0, 0), 2: (0, 1), 3: (0, 2)
+        , 4: (1, 0), 5: (1, 1), 6: (1, 2)
+        , 7: (2, 0), 8: (2, 1), 9: (2, 2)
+        , '*': (3, 0), 0: (3, 1), '#': (3, 2)
+    }
+
+    # 왼손 숫자, 오른손 숫자
+    left, right = {1, 4, 7}, {3, 6, 9}
+
+    # 손 위치 초기화
+    now_l, now_r = '*', '#'
+
+    ret = ''
+    for num in numbers:
+        if num in left:
+            ret += 'L'
+            now_l = num
+
+        elif num in right:
+            ret += 'R'
+            now_r = num
+
+        else:
+            ret += cal_dist(num, now_l, now_r, position, HANDED)
+            if ret[-1] == 'L':
+                now_l = num
+            else:
+                now_r = num
+    print(ret)
+    return ret
+
+'''
+# 나머지가 1이 되는 수 찾기
+'''
+def last_num(n):
+    x = n - 1
+
+    # 2의 배수 확인
+    if x % 2 == 0:
+        return 2
+
+    # 소수 값 찾기.
+    for i in range(2, int(math.sqrt(x)) + 1):
+        if x % i == 0:
+            return i
+    return x
+
+'''
+# 
+'''
+def doll():
+    board = [[0, 0, 0, 0, 0]
+           , [0, 0, 1, 0, 3]
+           , [0, 2, 5, 0, 1]
+           , [4, 2, 4, 4, 2]
+           , [3, 5, 1, 3, 1]]
+    moves = [1,5,3,5,1,2,1,4]
+    # result = 4
+
+    answer = 0
+    basket = []
+
+    # # move는 1부터 시작하기 때문에 index로 사용하기 위해선 -1씩 해줘야 함
+    # for move in moves:
+    #     for column in board:
+    #
+    #         if column[move - 1] != 0:
+    #             basket.append(column[move - 1])
+    #
+    #             if len(basket) > 1:
+    #                 if basket[-2] == basket[-1]:
+    #                     del basket[-2]
+    #                     del basket[-1]
+    #                     answer += 2
+    #             column[move-1] = 0
+    #             break
+
+    for i in moves:
+        for j in range(len(board)):
+
+            if board[j][i-1] != 0:
+                basket.append(board[j][i-1])
+                board[j][i - 1] = 0
+
+                if len(basket) > 1:
+                    if basket[-2] == basket[-1]:
+                        del basket[-2]
+                        del basket[-1]
+                        answer += 2
+                break
+
+    print(answer)
+'''
+# 비밀지도
+'''
+def secret_map(n, arr1, arr2):
+
+    answer = []
+
+    for num1, num2 in zip(arr1, arr2):
+        a12 = str(bin(num1|num2)[2:])
+        a12 = a12.rjust(n, '0')
+        a12 = a12.replace('1', '#')
+        a12 = a12.replace('0', ' ')
+        answer.append(a12)
+
+    print(answer)
 
 
 if __name__ == "__main__":
@@ -1409,5 +1542,9 @@ if __name__ == "__main__":
     # print(marathoner2(["mislav", "stanko", "mislav", "ana"], ["stanko", "ana", "mislav"]))
     # boxer([50, 82, 75, 120], ["NLWL", "WNLL", "LWNW", "WWLN"])
     # boxer([60,70,60], ["NNN","NNN","NNN"])
-    dart("1S2D*3T")
+    # dart("1S2D*3T")
     # dart("1D2S#10S")
+    # keypad([1, 3, 4, 5, 8, 2, 1, 4, 5, 9, 5], "right")
+    # print(last_num(12))
+    # doll()
+    secret_map(5, [9, 20, 28, 18, 11], [30, 1, 21, 17, 28])
