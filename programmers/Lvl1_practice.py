@@ -7,6 +7,8 @@ import re
 from datetime import datetime
 from math import gcd
 import itertools
+import time
+from time import timedelta
 
 '''
 # 최대공약수와 최소공배수
@@ -170,7 +172,6 @@ def sosu(nums):
                     cnt += 1
     return cnt
 
-
 def prime(nums):
     cnt = 0
     num_list = list(itertools.combinations(nums, 3))
@@ -182,8 +183,6 @@ def prime(nums):
 '''
 # 소수 판별
 '''
-
-
 def isPrimeNums(a, b, c):
     tot = a + b + c
     for i in range(2, tot):
@@ -1471,6 +1470,17 @@ def secret_map(n, arr1, arr2):
 
     print(answer)
 
+def practice():
+    # d = time.localtime()
+    d = (2020,8,26)
+
+    dt = d - timedelta(days=20)
+    dt.strtime('%Y-%m-%d')
+
+    print(dt)
+
+
+
 
 if __name__ == "__main__":
     # print(solution(2, 5))
@@ -1547,4 +1557,5 @@ if __name__ == "__main__":
     # keypad([1, 3, 4, 5, 8, 2, 1, 4, 5, 9, 5], "right")
     # print(last_num(12))
     # doll()
-    secret_map(5, [9, 20, 28, 18, 11], [30, 1, 21, 17, 28])
+    # secret_map(5, [9, 20, 28, 18, 11], [30, 1, 21, 17, 28])
+    practice()
