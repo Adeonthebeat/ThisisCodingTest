@@ -1,4 +1,5 @@
 # 순열 구하기
+# 3 2
 
 def dfs(idx):
     global cnt
@@ -18,8 +19,8 @@ def dfs(idx):
 
 if __name__ == "__main__":
     n, m = map(int, input().split())
+    ch = [0] * (n + 1)
     ret = [0] * n
-    ch =  [0] * (n + 1)
     cnt = 0
     dfs(0)
     print(cnt)
