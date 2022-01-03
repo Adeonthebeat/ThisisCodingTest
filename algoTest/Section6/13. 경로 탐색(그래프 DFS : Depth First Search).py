@@ -39,3 +39,5 @@ if __name__ == "__main__":
     ch[1] = 1  # 1번 노드 체크
     dfs(1)
     print(cnt)
+    print(cnt)
+
