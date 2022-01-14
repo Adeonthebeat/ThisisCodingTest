@@ -14,11 +14,12 @@ def dfs(idx):
                 dfs(idx + 1)
                 ch[i] = 0
 
+n, m = map(int, input().split())
+ch = [0] * (n + 1)
+ret = [0] * n
+cnt = 0
+dfs(0)
+print(cnt)
+#if __name__ == "__main__":
 
-if __name__ == "__main__":
-    n, m = map(int, input().split())
-    ch = [0] * (n + 1)
-    ret = [0] * n
-    cnt = 0
-    dfs(0)
-    print(cnt)
+
