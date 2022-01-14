@@ -20,6 +20,6 @@ if __name__ == "__main__":
     n, m = map(int, input().split())
     ret = [0] * n
     ch =  [0] * (n + 1)
-    cnt = 0
-    dfs(0)
+    #cnt = 0
+    #dfs(0)
     print(cnt)
