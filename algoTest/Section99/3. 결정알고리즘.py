@@ -3,7 +3,7 @@
 # 743
 # 457
 # 539
-
+# 랜선자르기(결정알고리즘)
 def cntCheck(ct):
     cnt = 0
     for x in line:

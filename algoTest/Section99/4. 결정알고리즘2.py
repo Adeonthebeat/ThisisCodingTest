@@ -1,5 +1,6 @@
 # 9 3
 # 1 2 3 4 5 6 7 8 9
+# 뮤직비디오(결정알고리즘)
 n, m = map(int, input().split())
 music = list(map(int, input().split()))
 music.sort()
