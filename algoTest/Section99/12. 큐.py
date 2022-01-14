@@ -1,5 +1,5 @@
 from collections import deque
-
+# 응급실
 # 5 2
 # 60 50 70 80 90
 # 6 0
