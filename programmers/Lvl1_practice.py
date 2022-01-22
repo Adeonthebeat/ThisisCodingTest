@@ -8,7 +8,7 @@ from datetime import datetime
 from math import gcd
 import itertools
 import time
-from time import timedelta
+
 
 '''
 # 최대공약수와 최소공배수
@@ -1470,14 +1470,6 @@ def secret_map(n, arr1, arr2):
 
     print(answer)
 
-def practice():
-    # d = time.localtime()
-    d = (2020,8,26)
-
-    dt = d - timedelta(days=20)
-    dt.strtime('%Y-%m-%d')
-
-    print(dt)
 
 
 
