@@ -9,7 +9,6 @@ from math import gcd
 import itertools
 import time
 
-
 '''
 # 최대공약수와 최소공배수
 두 수를 입력받아 두 수의 최대공약수와 최소공배수를 반환하는 함수, solution을 완성해 보세요. 
@@ -20,6 +19,14 @@ n	m	return
 3	12	[3, 12]
 2	5	[1, 10]
 '''
+
+
+def gcd(a, b):
+    if a < b:
+        (a, b) = (b, a)
+    while b != 0:
+        (a, b) = (b, a % b)
+    return a
 
 
 def solution(n, m):
@@ -172,6 +179,7 @@ def sosu(nums):
                     cnt += 1
     return cnt
 
+
 def prime(nums):
     cnt = 0
     num_list = list(itertools.combinations(nums, 3))
@@ -183,6 +191,8 @@ def prime(nums):
 '''
 # 소수 판별
 '''
+
+
 def isPrimeNums(a, b, c):
     tot = a + b + c
     for i in range(2, tot):
@@ -263,22 +273,27 @@ def sum_matrix(arr1, arr2):
 
     return arr1
 
-
+'''
+# 가장 작은 수 제거
+'''
 def remove_min(arr):
-    if (len(arr) > 1):
-        list = set(arr)
-
-        list.remove(min(list))
-
+    if len(arr) > 1:
         arr.remove(min(arr))
-
-        # print(list)
-        print(arr)
     else:
-        arr.remove(max(arr))
-        arr.append(-1)
-        print(arr)
+        arr = [-1]
+
+    return arr
     # return [i for i in arr if i > min(arr)]
+
+
+'''
+# 콜라츠 추측
+937년 Collatz란 사람에 의해 제기된 이 추측은, 주어진 수가 1이 될때 까지 
+다음 작업을 반복하면, 모든 수를 1로 만들 수 있다는 추측입니다
+1-1. 입력된 수가 짝수라면 2로 나눕니다. 
+1-2. 입력된 수가 홀수라면 3을 곱하고 1을 더합니다.
+2. 결과로 나온 수에 같은 작업을 1이 될 때까지 반복합니다.
+'''
 
 
 def collatz(num):
@@ -332,18 +347,14 @@ n	    return
 
 
 def square_root(n):
-    # sqrt_num = int(math.sqrt(n))
-    # answer = int(math.pow(sqrt_num+1, 2))
+    #     sqrt_num = n ** (1/2)
 
-    # sqrt_num = n ** (1/2)
-    #
-    # if sqrt_num % 1 == 0:
-    #     print(int((sqrt_num + 1) ** 2))
-    # else:
-    #     print(-1)
+    #     if sqrt_num % 1 == 0:
+    #         return int(sqrt_num + 1) ** 2
+    #     else:
+    #         return -1
 
-    print(int(pow(math.sqrt(n) + 1, 2)) if math.sqrt(n) % 1 == 0 else -1)
-
+    return math.pow(math.sqrt(n) + 1, 2) if math.sqrt(n) % 1 == 0 else -1
 
 '''
 # 정수 내림차순으로 배치하기 문제
@@ -413,14 +424,8 @@ def phone_number(phone_num):
 
 def reversed_str():
     n = 12345
-
-    rvs_str = str(n)[::-1]
-
-    data = list(map(int, list(rvs_str)))
-
-    print(data)
-
-    print(list(map(int, reversed(str(n)))))
+    data = str(n)[::-1]
+    return list(map(int, data))
 
 
 '''
@@ -610,10 +615,7 @@ def divisor():
 
 def number_of_sum():
     n = 123
-
-    arr = list(map(int, str(n)))
-
-    return sum([i for i in arr])
+    return sum(list(map(int, str(n))))
 
 
 '''
@@ -646,22 +648,21 @@ def isTrue():
 
 def weird_text():
     s = "try hello world"
-    words_list = s.split()
+    # 짝수 대문자 홀수 소문자
+    word_list = s.split(" ")
     new_list = []
 
-    for word in words_list:
+    for word in word_list:
         new_word = ""
         for i in range(len(word)):
-            # new_word += word[i].upper() if i % 2 == 0 else word[i].lower()
             if i % 2 == 0:
                 new_word += word[i].upper()
             else:
                 new_word += word[i].lower()
-
         new_list.append(new_word)
-    print(" ".join(new_list))
-    print(
-        " ".join(["".join([w.upper() if i % 2 == 0 else w.lower() for i, w in enumerate(word)]) for word in s.split()]))
+
+    #return " ".join(new_list)
+    print(" ".join(["".join([w.upper() if i % 2 == 0 else w.lower() for i, w in enumerate(word)]) for word in s.split()]))
 
 
 '''
@@ -1393,9 +1394,12 @@ def keypad(numbers, hand):
     print(ret)
     return ret
 
+
 '''
 # 나머지가 1이 되는 수 찾기
 '''
+
+
 def last_num(n):
     x = n - 1
 
@@ -1409,16 +1413,19 @@ def last_num(n):
             return i
     return x
 
+
 '''
 # 
 '''
+
+
 def doll():
     board = [[0, 0, 0, 0, 0]
-           , [0, 0, 1, 0, 3]
-           , [0, 2, 5, 0, 1]
-           , [4, 2, 4, 4, 2]
-           , [3, 5, 1, 3, 1]]
-    moves = [1,5,3,5,1,2,1,4]
+        , [0, 0, 1, 0, 3]
+        , [0, 2, 5, 0, 1]
+        , [4, 2, 4, 4, 2]
+        , [3, 5, 1, 3, 1]]
+    moves = [1, 5, 3, 5, 1, 2, 1, 4]
     # result = 4
 
     answer = 0
@@ -1442,8 +1449,8 @@ def doll():
     for i in moves:
         for j in range(len(board)):
 
-            if board[j][i-1] != 0:
-                basket.append(board[j][i-1])
+            if board[j][i - 1] != 0:
+                basket.append(board[j][i - 1])
                 board[j][i - 1] = 0
 
                 if len(basket) > 1:
@@ -1454,24 +1461,24 @@ def doll():
                 break
 
     print(answer)
+
+
 '''
 # 비밀지도
 '''
-def secret_map(n, arr1, arr2):
 
+
+def secret_map(n, arr1, arr2):
     answer = []
 
     for num1, num2 in zip(arr1, arr2):
-        a12 = str(bin(num1|num2)[2:])
+        a12 = str(bin(num1 | num2)[2:])
         a12 = a12.rjust(n, '0')
         a12 = a12.replace('1', '#')
         a12 = a12.replace('0', ' ')
         answer.append(a12)
 
     print(answer)
-
-
-
 
 
 if __name__ == "__main__":
