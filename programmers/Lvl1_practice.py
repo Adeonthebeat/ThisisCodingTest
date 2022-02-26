@@ -750,15 +750,14 @@ def subak():
 
 
 def caesar_cipher(s, n):
-    s = list(s)
+    data = list(s)
+    for i in range(len(data)):
+        if data[i].isupper():
+            data[i] = chr((ord(data[i]) - ord('A') + n) % 26 + ord('A'))
+        elif data[i].islower():
+            data[i] = chr((ord(data[i]) - ord('a') + n) % 26 + ord('a'))
 
-    for i in range(len(s)):
-        if s[i].isupper():
-            s[i] = chr((ord(s[i]) - ord('A') + n) % 26 + ord('A'))
-        elif s[i].islower():
-            s[i] = chr((ord(s[i]) - ord('a') + n) % 26 + ord('a'))
-
-    print("".join(s))
+    return "".join(data)
 
 
 '''
