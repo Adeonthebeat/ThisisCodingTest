@@ -41,7 +41,7 @@ def solution(n, m):
 
 
 '''
-# s
+# 문자열 내 마음대로 정렬하기.
 문자열로 구성된 리스트 strings와, 정수 n이 주어졌을 때, 
 각 문자열의 인덱스 n번째 글자를 기준으로 오름차순 정렬하려 합니다. 
 예를 들어 strings가 ["sun", "bed", "car"]이고 n이 1이면 
@@ -617,6 +617,14 @@ def number_of_sum():
     n = 123
     return sum(list(map(int, str(n))))
 
+'''
+# 나누어 떨어지는 숫자
+'''
+def div():
+    arr = [5, 9, 7, 10]
+    divisor = 5
+    # return [5, 10]
+    return sorted([i for i in arr if i % divisor]) or [-1]
 
 '''
 # 문자열 다루기 기본
@@ -625,16 +633,18 @@ def number_of_sum():
 
 def isTrue():
     s = "a234"
+
     answer = False
 
     re_s = re.sub('[0-9]', '', s)
 
     if re_s == '':
-        if len(s) in range(4, 6):
+        if len(s) == 4 or len(s) == 6:
             answer = True
-        else:
-            answer = False
+    else:
+        answer = False
 
+    return answer
 
 '''
 # 이상한 문자 만들기
@@ -1032,6 +1042,23 @@ def play_garden(price, money, count):
 
     answer = sum - money if sum > money else 0
 
+'''
+    ret = 0
+    
+    for i in range(1, count + 1):
+        ret += price * i
+        
+    answer = (money - ret) * -1
+    
+    if answer == 0:
+        answer = -1
+
+    if answer < 0:
+        answer = 0
+        
+        
+    return answer
+'''
     # print(answer)
     # return max(0, price * (count + 1) * count // 2 - money)
 
@@ -1396,6 +1423,13 @@ def keypad(numbers, hand):
 
 '''
 # 나머지가 1이 되는 수 찾기
+    result_list = []
+    for i in range(1, n + 1):
+        if n % i == 1:
+            result_list.append(i)
+    return min(result_list)
+    
+    # return min([i for i in range(1, n + 1) if n % i == 1])
 '''
 
 
@@ -1471,7 +1505,7 @@ def secret_map(n, arr1, arr2):
     answer = []
 
     for num1, num2 in zip(arr1, arr2):
-        a12 = str(bin(num1 | num2)[2:])
+        a12 = str(bin(num1 | num2)[2:]) # 비트연산
         a12 = a12.rjust(n, '0')
         a12 = a12.replace('1', '#')
         a12 = a12.replace('0', ' ')
