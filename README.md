@@ -9,8 +9,3 @@
 
 ### 교재
 [이것이 취업을 위한 코딩 테스트다 with 파이썬](http://www.kyobobook.co.kr/product/detailViewKor.laf?barcode=9791162243077&gclid=EAIaIQobChMIhaWe2vvy-QIVxyFgCh0b0QPyEAAYASAAEgLTYvD_BwE, "kyobobook link")
-
-
-
-
-
