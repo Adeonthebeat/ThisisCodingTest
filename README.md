@@ -4,7 +4,7 @@
 * '이것이 취업을 위한 코딩 테스트다' 공부
 * 프로그래머스 레벨 1~2
 
-### Tecc Stack
+### Tech Stack
 <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=linux&logoColor=white">
 
 ### 교재
